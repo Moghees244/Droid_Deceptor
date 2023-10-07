@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Apk Upload
+{% endblock %}
+
+{% block content %}
+
+    <h1>Upload APK File</h1>
+    <form method=post enctype=multipart/form-data>
+      <input type=file name=file>
+      <input type=submit value=Upload>
+    </form>
+
+    <!-- Display success or error messages here -->
+    {% if success_message %}
+        <p class="success">{{ success_message }}</p>
+    {% endif %}
+    {% if error_message %}
+        <p class="error">{{ error_message }}</p>
+    {% endif %}
+    {% if uploaded_file %}
+        <p>Uploaded Files: {{ uploaded_file }}</p>
+    {% endif %}
+    
+{% endblock %}
