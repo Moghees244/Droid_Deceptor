@@ -8,8 +8,8 @@ from androguard.core.bytecodes import apk
 manifest_features_file_path = 'droid_deceptor/public/manifest_features.txt'
 api_calls_file_path = 'droid_deceptor/public/api_calls.txt'
 
-apks_path = 'droid_deceptor/uploads'
-source_code_path = 'droid_deceptor/outputs'
+apks_path = 'droid_deceptor/uploads/'
+source_code_path = 'droid_deceptor/outputs/'
 
 
 # read all permissions from file and make a list of it
@@ -53,24 +53,29 @@ def extract_features(file_name):
 
         # Extracting api calls from source code of apk
         extracted_api_calls = extract_api_calls(file_name)
+        print(extracted_api_calls )
         if extracted_api_calls is None:
             return None
+        
         # vectorizing api calls
         for api_call in api_calls:
             if api_call in extracted_api_calls:
+                print(api_call)
                 app_data[api_call] = 1
             else:
                 app_data[api_call] = 0
-        # append list to data frame
+
         app_data['sha256'] = file_name[:-4]
 
         return app_data
 
 
-def find_java_files():
+def find_java_files(filename):
     java_files = []
+    path = os.path.join(source_code_path, filename[:-4])
+    
     # Finding and saving paths of all .java files in source code of apk
-    for folder_name, subfolders, filenames in os.walk(source_code_path):
+    for folder_name, subfolders, filenames in os.walk(path):
         for filename in filenames:
             if filename.endswith('.java'):
                 java_files.append(os.path.join(folder_name, filename))
@@ -81,14 +86,18 @@ def extract_api_calls(filename):
     apk_api_calls = []
     api_calls = get_feature_list(api_calls_file_path)
 
+    subprocess.run(["mkdir", os.path.join(source_code_path, filename[:-4])])
+
     try:
         # Getting apk source code and saving in a folder
-        command = ["jadx", "-d", os.path.join(source_code_path, filename), os.path.join(apks_path, filename)]
+        command = ["jadx", "-d", os.path.join("/home/blackcat/FYP/Droid_Deceptor/droid_deceptor/outputs", filename[:-4])
+                   , os.path.join("/home/blackcat/FYP/Droid_Deceptor/droid_deceptor/uploads", filename)]
+        
         with open(os.devnull, "w") as devnull:
             subprocess.run(command, stdout=devnull, stderr=subprocess.STDOUT)
-
+        
         # Finding api calls from all java files
-        for file in find_java_files():
+        for file in find_java_files(filename):
             with open(file, 'r') as source_file:
                 code = source_file.read()
                 for api_call in api_calls:
@@ -98,9 +107,10 @@ def extract_api_calls(filename):
                         apk_api_calls.append(api_call)
 
     except:
+        print("Problem in jadx")
         return None
 
     # Deleting the source code
-    subprocess.run(["rm", "-r", os.path.join(source_code_path, filename)])
+    subprocess.run(["rm", "-r", os.path.join(source_code_path, filename[:-4])])
     return apk_api_calls
     

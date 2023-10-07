@@ -5,7 +5,7 @@ from droid_deceptor.controllers.feature_extractor import extract_features
 def get_apk(files):
     UPLOAD_FOLDER = 'droid_deceptor/uploads'
 
-    success_message, error_message , uploaded_file = None, None, None
+    success_message, error_message , uploaded_file, features = None, None, None, None
 
     # Check if the 'file' field is in the request
     if 'file' not in files:
