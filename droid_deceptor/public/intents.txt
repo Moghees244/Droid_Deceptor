@@ -1,0 +1,12 @@
+android.intent.action.DELETE
+android.intent.action.GET_CONTENT
+android.intent.action.MAIN
+android.intent.action.PICK
+android.intent.action.SEND
+android.intent.action.SET_WALLPAPER
+android.intent.action.VIEW
+android.intent.category.BROWSABLE
+android.intent.category.DEFAULT
+android.intent.category.HOME
+android.intent.category.INFO
+android.intent.category.LAUNCHER

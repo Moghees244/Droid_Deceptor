@@ -3,7 +3,7 @@ from droid_deceptor.controllers.apk_upload import get_apk
 
 app = Flask(__name__)
 
-@app.route("/upload", methods=['GET', 'POST'])
+@app.route("/", methods=['GET', 'POST'])
 def upload_apk():
     if request.method == "POST":
         return get_apk(request.files)

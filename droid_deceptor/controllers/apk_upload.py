@@ -1,5 +1,6 @@
 import os
 from flask import render_template
+from droid_deceptor.controllers.feature_extractor import extract_features
 
 def get_apk(files):
     UPLOAD_FOLDER = 'droid_deceptor/uploads'
@@ -25,4 +26,7 @@ def get_apk(files):
         uploaded_file = file.filename
         success_message = "File Saved"
 
-    return render_template('upload.html', success_message=success_message, error_message=error_message, uploaded_file=uploaded_file)
+        # extract features
+        features = extract_features(file.filename)
+
+    return render_template('upload.html', success_message=success_message, error_message=error_message, uploaded_file=uploaded_file, features=features)
