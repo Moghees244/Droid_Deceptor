@@ -13,18 +13,27 @@
     </form>
 
     <!-- Display success or error messages here -->
-    {% if success_message %}
-        <p class="success">{{ success_message }}</p>
-    {% endif %}
-    {% if error_message %}
-        <p class="error">{{ error_message }}</p>
+    {% if message %}
+        <p class="message">{{ message }}</p>
     {% endif %}
     {% if uploaded_file %}
         <p>Uploaded Files: {{ uploaded_file }}</p>
     {% endif %}
 
     {% if features %}
-        <p>Features: {{ features }}</p>
+        <h1>Extracted Features</h1>
+        <p>sha256 : {{features['sha256']}}</p>
+        {% for feature, value in features.items() %}
+            {% if value == 1 %}
+                <p>{{ feature }}</p>
+            {% endif %}
+        {% endfor %}
     {% endif %}
+
+    {% if not features %}
+        <h2>No Features Extracted</h2>
+    {% endif %}
+
+    
     
 {% endblock %}

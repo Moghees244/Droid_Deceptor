@@ -53,20 +53,22 @@ def extract_features(file_name):
 
         # Extracting api calls from source code of apk
         extracted_api_calls = extract_api_calls(file_name)
-        print(extracted_api_calls )
         if extracted_api_calls is None:
             return None
         
         # vectorizing api calls
         for api_call in api_calls:
             if api_call in extracted_api_calls:
-                print(api_call)
                 app_data[api_call] = 1
             else:
                 app_data[api_call] = 0
 
-        app_data['sha256'] = file_name[:-4]
-
+        # calculating sha256 hash and storing it
+        result = subprocess.run(['sha256sum', os.path.join(apks_path, file_name)], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
+        sha256_hash = result.stdout.split()[0]
+        app_data['sha256'] = sha256_hash
+        
+        # return all the features
         return app_data
 
 
