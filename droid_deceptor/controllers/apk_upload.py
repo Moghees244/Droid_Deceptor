@@ -1,6 +1,7 @@
 import os
 from flask import render_template
 from droid_deceptor.controllers.feature_extractor import extract_features
+from droid_deceptor.controllers.malware_classification import malware_classifier
 
 def get_apk(files):
     UPLOAD_FOLDER = 'droid_deceptor/uploads'
@@ -29,4 +30,7 @@ def get_apk(files):
         # extract features
         features = extract_features(file.filename)
 
-    return render_template('upload.html', message=message, uploaded_file=uploaded_file, features=features)
+        # check if its a malware or not
+        results = malware_classifier(features)
+
+    return render_template('upload.html', message=message, uploaded_file=uploaded_file, features=features, results=results)
