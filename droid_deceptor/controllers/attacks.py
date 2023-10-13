@@ -11,9 +11,6 @@ class Attacks:
     def jsma_attack(self, max_perturbations):
         print("JSMA ATTACK")
         original_class = self.initial_data()
-
-        if original_class == 'B':
-            return None
         # Create a copy of the APK vector for manipulation
         adversarial_example = self.apk_vector.copy()
         
