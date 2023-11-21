@@ -1,0 +1,5 @@
+android.hardware.camera
+android.hardware.camera.autofocus
+android.hardware.sensor.accelerometer
+android.hardware.telephony
+android.hardware.touchscreen
