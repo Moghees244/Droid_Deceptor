@@ -92,8 +92,8 @@ def extract_api_calls(filename):
 
     try:
         # Getting apk source code and saving in a folder
-        command = ["jadx", "-d", os.path.join("/home/blackcat/FYP/Droid_Deceptor/droid_deceptor/outputs", filename[:-4])
-                   , os.path.join("/home/blackcat/FYP/Droid_Deceptor/droid_deceptor/uploads", filename)]
+        command = ["jadx", "-d", os.path.join("/home/blackcat/FYP/FYP_Code/FYP_Droid_Deceptor/droid_deceptor/outputs", filename[:-4])
+                   , os.path.join("/home/blackcat/FYP/FYP_Code/FYP_Droid_Deceptor/droid_deceptor/uploads", filename)]
         
         with open(os.devnull, "w") as devnull:
             subprocess.run(command, stdout=devnull, stderr=subprocess.STDOUT)

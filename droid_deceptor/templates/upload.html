@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Apk Upload
+{% endblock %}
+
+{% block content %}
+
+    <h1>Upload APK File</h1>
+    <form method=post enctype=multipart/form-data>
+      <input type=file name=file>
+      <input type=submit value=Upload>
+    </form>
+
+    <!-- Display success or error messages here -->
+    {% if message %}
+        <p class="message">{{ message }}</p>
+    {% endif %}
+    {% if uploaded_file %}
+        <p>Uploaded Files: {{ uploaded_file }}</p>
+    {% endif %}
+
+    {% if features %}
+        <h1>Extracted Features</h1>
+        <p>sha256 : {{features['sha256']}}</p>
+        {% for feature, value in features.items() %}
+            {% if value == 1 %}
+                <p>{{ feature }}</p>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% if not features %}
+        <h2>Upload APK</h2>
+    {% endif %}
+
+    {% if results %}
+        <h2>Results</h2>
+        <p>{{results}}</p>
+    {% endif %}
+
+    {% if perturbations %}
+        <h1>Perturbations</h1>
+        <p>{{perturbations}}</p>
+    {% endif %}
+
+    
+    
+{% endblock %}
