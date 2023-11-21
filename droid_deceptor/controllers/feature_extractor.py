@@ -2,6 +2,8 @@ import os
 import re
 import subprocess
 from androguard.core.bytecodes import apk
+from flask import render_template, request
+
 
 
 # Paths
@@ -115,4 +117,11 @@ def extract_api_calls(filename):
     # Deleting the source code
     subprocess.run(["rm", "-r", os.path.join(source_code_path, filename[:-4])])
     return apk_api_calls
+
+
+def display_results():
+    uploaded_file = request.args.get('uploaded_file', '')
+    features = extract_features(uploaded_file)
+
+    return render_template('results.html', message="File Uploaded", uploaded_file=uploaded_file, features=features)
     

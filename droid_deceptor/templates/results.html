@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Apk Upload
+{% endblock %}
+
+{% block content %}
+    <!-- Display success or error messages here -->
+    {% if uploaded_file %}
+        <p>Uploaded Files: {{ uploaded_file }}</p>
+    {% endif %}
+
+    {% if features %}
+        <h1>Extracted Features</h1>
+        <p>sha256 : {{features['sha256']}}</p>
+        {% for feature, value in features.items() %}
+            {% if value == 1 %}
+                <p>{{ feature }}</p>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% if not features %}
+        <h2>Invalid APK</h2>
+    {% endif %}    
+
+{% endblock %}

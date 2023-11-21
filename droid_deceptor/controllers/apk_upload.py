@@ -1,22 +1,23 @@
 import os
-from flask import render_template
-from droid_deceptor.controllers.feature_extractor import extract_features
+from flask import render_template, request, redirect, url_for
+
+def upload_apk():
+    if request.method == "POST":
+        return get_apk(request.files)
+
+    # Render the 'upload.html' template for the 'GET' request
+    return render_template('upload.html')
 
 
 def get_apk(files):
     UPLOAD_FOLDER = 'droid_deceptor/uploads'
 
-    message, uploaded_file, features, results, perturbations = None, None, None, None, None
-
-    # Check if the 'file' field is in the request
-    if 'file' not in files:
-        message = "No file Uploaded"
-
+    uploaded_file = None
     file = files['file']
 
     # Check if the user submitted an empty file input
     if file.filename == '':
-        message = "No selected file"
+        return render_template('upload.html', message="APK Not Selected.")
 
     if file:
         # Ensure the folder exists
@@ -25,9 +26,5 @@ def get_apk(files):
         # Save the uploaded APK file to the UPLOAD_FOLDER
         file.save(os.path.join(UPLOAD_FOLDER, file.filename))
         uploaded_file = file.filename
-        message = "File Saved"
 
-        # extract features
-        features = extract_features(file.filename)
-
-    return render_template('upload.html', message=message, uploaded_file=uploaded_file, features=features)
+    return redirect(url_for('blueprint.display_results', uploaded_file=uploaded_file))
