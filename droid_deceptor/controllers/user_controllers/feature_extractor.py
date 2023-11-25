@@ -4,8 +4,6 @@ import subprocess
 from androguard.core.bytecodes import apk
 from flask import render_template, request
 
-
-
 # Paths
 manifest_features_file_path = 'droid_deceptor/public/manifest_features.txt'
 api_calls_file_path = 'droid_deceptor/public/api_calls.txt'

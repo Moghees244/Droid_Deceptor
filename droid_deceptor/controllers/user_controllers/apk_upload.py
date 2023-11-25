@@ -18,7 +18,10 @@ def get_apk(files):
     # Check if the user submitted an empty file input
     if file.filename == '':
         return render_template('upload.html', message="APK Not Selected.")
-
+    
+    if not file.filename.endswith('.apk'):
+        return render_template('upload.html', message="You Can Only Upload APK Files.")
+    
     if file:
         # Ensure the folder exists
         os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -27,4 +30,4 @@ def get_apk(files):
         file.save(os.path.join(UPLOAD_FOLDER, file.filename))
         uploaded_file = file.filename
 
-    return redirect(url_for('blueprint.display_results', uploaded_file=uploaded_file))
+    return redirect(url_for('user.display_results', uploaded_file=uploaded_file))

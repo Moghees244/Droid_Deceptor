@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Apk Upload
+    Results
 {% endblock %}
 
 {% block content %}
-    <!-- Display success or error messages here -->
-    {% if uploaded_file %}
+<h1>Results</h1>
+
+{% if uploaded_file %}
         <p>Uploaded Files: {{ uploaded_file }}</p>
     {% endif %}
 
