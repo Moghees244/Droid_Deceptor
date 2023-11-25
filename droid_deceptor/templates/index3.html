@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VirusTotal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <style>
+        * {
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            }
+        .button-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .button {
+            margin-right: 10px;
+            padding: 10px 20px;
+            color: black; /* Text color is now black */
+            background-color: white; /* Background color is now white */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Style for the "Sign Up" button */
+        .button.signup {
+            background-color: rgba(0, 123, 255, 0.5); /* Blue with blur effect */
+            backdrop-filter: blur(10px); /* Blur effect */
+        }
+
+        /* Style for the heading text and its container */
+        .heading-container {
+            text-align: center; /* Center the text horizontally */
+            margin-top: 40px;
+            padding: 10px 100px; 
+            
+            /* Add some top margin for spacing */
+        }
+
+        h1 {
+            font-size: 60px; /* Increase the font size to your desired value */
+            font-weight: bold;
+            color: blue;
+            
+             /* Change text color to blue */
+        }
+
+        /* Style for the button container below the heading */
+        .button-container-below {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Style for the URL input field */
+        .url-input,
+        .search-input {
+        display: none;
+        margin-top: 10px;
+        width: 60%; /* Adjust the width to your preference */
+        height: 30px; /* Adjust the height to your preference */
+        margin: 0 auto; /* Center-align the input fields horizontally */
+    }
+
+
+        /* Style for the bottom columns */
+        .bottom-columns {
+            display: flex;
+            justify-content: space-between;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .column {
+            flex-basis: calc(20% - 20px); /* 20% width with some margin in between */
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+        /* Style for the rows within the VirusTotal column */
+        .virus-total-column .row {
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+
+        /* Style for the button container with light gray background */
+        .button-container-gray {
+            background-color:gray;
+            padding: 10px;
+            width: 50%;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        /* Style for the file input */
+        .file-input {
+            display: none; /* Hide the file input initially */
+        }
+
+        /* Correct the position of the top-right buttons */
+        .button-container-top-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .centered-paragraph {
+            text-align: center;
+        }
+
+        
+        /* Style for the button container with gray background */
+.button-container-gray {
+    background-color:whitesmoke;
+    padding: 10px;
+    width: 50%;
+    border-radius: 5px;
+    display: inline-block;
+    text-align: center; /* Center-align the text */
+}
+
+/* Style for the buttons inside the container */
+.button-container-gray .button {
+    text-decoration: none; /* Remove underline from the link text */
+    color: black; /* Set link text color to white */
+    padding: 10px 50px; /* Increase the width of the buttons by adjusting padding */
+    background-color: white; /* Set the initial background color of the buttons */
+    transition: background-color 0.3s ease, text-decoration 0.3s ease; /* Add transition for smoother hover effect */
+}
+
+/* Add a blue hover effect and underline on hover for individual buttons */
+.button-container-gray .button:hover {
+    background-color: blue; /* Change background color to blue on hover */
+    text-decoration: underline; /* Add an underline on hover */
+    cursor: pointer;
+}
+
+
+
+
+.file-input-container {
+            text-align: center;
+            display: none;
+        }
+
+        .file-input {
+            display: inline-block;
+        }
+        .file-label
+        {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Your page content here -->
+    <div class="heading-container">
+        <h1>VirusTotal</h1>
+        <br><br>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Analyse suspicious files, domains, IPs and URLs to detect malware and other <br>breaches, automatically share them with the security community</p>
+        <br><br><br><br>
+    </div>
+    <div class="button-container-below">
+        <div class="button-container-gray" id="fileButtonContainer">
+            <button class="button" onclick="showFileInput()">File</button>
+            <button class="button" onclick="toggleUrlInput()">URL</button>
+            <button class="button" onclick="toggleSearchInput()">Search</button>
+        </div>
+        <div class="file-input-container" id="fileInputContainer">
+            <!-- Add an icon or logo above the "Choose File" button -->
+            <br>
+            <div class="file-icon">
+                <img src="scanning-icon.png" alt="Scanning Icon" style="width: 100px; height: 100px;"/>
+            </div>
+            <br>
+            <label for="fileInput" class="file-label">Choose File</label>
+            <input type="file" id="fileInput" class="file-input" accept=".apk" onchange="handleFileUpload(this)">
+        </div>
+        <!-- Add the URL image container as before -->
+        <div class="file-input-container" id="urlImageContainer" style="display: none;">
+            <img id="urlImage" src="url-image.png" alt="URL Icon" style="width: 100px; height: 100px;">
+        </div>
+        <!-- Add the Search image container -->
+        <div class="file-input-container" id="searchImageContainer" style="display: none;">
+            <img id="searchImage" src="search-icon.png" alt="Search Icon" style="width: 100px; height: 100px;">
+            <p style="text-align: center;">Search for a hash, domain, IP address, URL or gain additional context and threat landscape visibility with VT ENTERPRISE.</p>
+        </div>
+        <input type="text" id="urlInput" class="url-input" placeholder="Search or Scan a URL">
+        <input type="text" id="searchInput" class="search-input" placeholder="URL, IP address,domain, or file hash">
+    </div>
+    <br><br><br><br>
+    <br><br><br>
+    <p class="centered-paragraph">  By submitting data above, you are agreeing to our Terms of Service and Privacy Policy<br> and to the sharing of your Sample submission with the security community.<br> Please do not submit any personal information; VirusTotal is not responsible for <br>the contents of your submission.<br> Learn more.
+        <br><br><br><br><br><br><br>Want to automate submissions? Check our API, or access your API key.</p>
+
+    <div class="button-container">
+        <button class="button">Intelligence</button>
+        <button class="button">Hunting</button>
+        <button class="button">Graph</button>
+        <button class="button">API</button>
+    </div>
+
+    <!-- Button container for icons on the top right -->
+    <div class="button-container-top-right">
+        <button class="button"><i class="fas fa-google-drive"></i></button>
+        <button class="button"><i class="fas fa-comment"></i></button>
+        <button class="button"><i class="fas fa-plane"></i></button>
+        <button class="button signup">Sign Up</button>
+        <button class="button signup">Sign Up</button><!-- Apply the "signup" class to the "Sign Up" button -->
+    </div>
+
+    <!-- Bottom Columns -->
+    <div class="bottom-columns">
+        <!-- VirusTotal Column -->
+        <div class="column">
+            <h2>VirusTotal</h2>
+            <div class="row">
+                <span class="row-label">Contact Us:</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">Get Support:</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">How It Works:</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">TOS | Privacy Policy:</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">Blog | Releases:</span> <a href="#"></a>
+            </div>
+        </div>
+        <!-- Other Columns (Community, Tools, Premium Service, Documentation) -->
+        <div class="column">
+            <h2>Community</h2>
+            <div class="row">
+                <span class="row-label">Join Community</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">Vote and Comment</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">Contributors</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">Top Users</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">Community Buzz</span> <a href="#"></a>
+            </div>
+
+        </div>
+        <div class="column">
+            <h2>Tools</h2>
+            <div class="row">
+                <span class="row-label">API Scripts</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">YARA</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">Desktop Apps</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">Browser Extensions</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">Mobile App</span> <a href="#"></a>
+            </div>
+        </div>
+        <div class="column">
+            <h2>Premium Service</h2>
+            <div class="row">
+                <span class="row-label">Get a Demo</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">Intelligence</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">Hunting</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">Graph</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">API v3 | v2</span> <a href="#"></a>
+            </div>
+        </div>
+        <div class="column">
+            <h2>Documentation</h2>
+            <div class="row">
+                <span class="row-label">Searching</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">Reports</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">API v3 | v2</span> <a href="#"></a>
+            </div>
+            <div class="row">
+                <span class="row-label">Use cases</span> <a href="#"></a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+         function handleFileUpload(input) {
+        const file = input.files[0];
+        if (file) {
+            console.log('Selected file:', file.name);
+        }
+    }
+
+    function toggleUrlInput() {
+        const urlInput = document.getElementById("urlInput");
+        const fileInputContainer = document.getElementById("fileInputContainer");
+        const searchInput = document.getElementById("searchInput");
+        const urlImageContainer = document.getElementById("urlImageContainer");
+        const searchImageContainer = document.getElementById("searchImageContainer");
+
+        urlInput.style.display = "block";
+        fileInputContainer.style.display = "none";
+        searchInput.style.display = "none";
+        urlImageContainer.style.display = "block";
+        searchImageContainer.style.display = "none"; // Hide the Search image
+    }
+
+    function toggleSearchInput() {
+        const urlInput = document.getElementById("urlInput");
+        const fileInputContainer = document.getElementById("fileInputContainer");
+        const searchInput = document.getElementById("searchInput");
+        const urlImageContainer = document.getElementById("urlImageContainer");
+        const searchImageContainer = document.getElementById("searchImageContainer");
+
+        urlInput.style.display = "none";
+        fileInputContainer.style.display = "none";
+        searchInput.style.display = "block";
+        urlImageContainer.style.display = "none"; // Hide the URL image
+        searchImageContainer.style.display = "block"; // Show the Search image
+    }
+
+    function showFileInput() {
+        const urlInput = document.getElementById("urlInput");
+        const fileInputContainer = document.getElementById("fileInputContainer");
+        const searchInput = document.getElementById("searchInput");
+        const urlImageContainer = document.getElementById("urlImageContainer");
+        const searchImageContainer = document.getElementById("searchImageContainer");
+
+        urlInput.style.display = "none";
+        fileInputContainer.style.display = "block";
+        searchInput.style.display = "none";
+        urlImageContainer.style.display = "none"; // Hide the URL image
+        searchImageContainer.style.display = "none"; // Hide the Search image
+    }
+    </script>
+</body>
+</html>

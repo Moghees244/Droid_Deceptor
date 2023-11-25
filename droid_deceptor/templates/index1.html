@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* CSS Styles */
+        .container {
+            display: flex;
+            background-color: #F5F5DC;
+        }
+        .left-panel {
+            width: 30%;
+            padding: 20px;
+            background-color: #004f98;
+        }
+        .left-panel h1 {
+            color: white;
+            text-align: center;
+        }
+        .left-panel h2 {
+            color: white;
+        }
+        .left-panel p {
+            color: white;
+        }
+        .right-panel {
+            width: 50%;
+            padding: 20px;
+        }
+        .form-container {
+            display: grid;
+            gap: 10px;
+        }
+        .form-container input,
+        .form-container button {
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+        }
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .social-buttons button {
+            background-color: white;
+            width: 350px;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .social-buttons button img {
+            max-width: 20px;
+            max-height: 100%;
+            margin-right: 10px;
+        }
+        .social-buttons button:hover {
+            background-color: white;
+        }
+        .underline {
+            text-decoration: underline;
+            border-bottom: 2px solid #004f98;
+        }
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+        }
+        .checkbox-input {
+            margin-right: 10px;
+        }
+        .signup-button {
+            background-color: #004f98;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .slideshow-container {
+            position: relative;
+        }
+        .slide {
+            display: none;
+        }
+        .slide-content {
+            padding: 20px;
+        }
+        .slide h1 {
+            color: black;
+        }
+        .slide h2 {
+            color: blue;
+        }
+        .slide p {
+            color: black;
+        }
+        .slide-button {
+            background-color: #004f98;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+       
+
+
+
+
+
+
+
+
+
+        .arrow {
+        font-size: 35px;
+        cursor: pointer;
+        position: absolute;
+        top: 500%;
+        transform: translateY(-50%);
+       
+    }
+
+    .left-arrow {
+        left: 20;
+    }
+
+    .right-arrow {
+        right: 0;
+    }
+
+    .slider-navigation {
+        position: relative;
+    }
+    
+
+    .slide-button {
+    background: linear-gradient(to right, #007acc, #004f98); /* Gradient background */
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: background 0.3s ease-in-out; /* Add a smooth transition */
+}
+
+/* Add a hover effect */
+.slide-button:hover {
+    background: linear-gradient(to right, #004f98, #007acc); /* Updated gradient on hover */
+}
+    </style>
+    <title>VirusTotal Signup</title>
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h3 style="color: white;">VIRUSTOTAL</h3>
+            <h1>Sign in</h1>
+            <p class="underline">Not a VirusTotal Member? <button class="signup-button">Sign Up</button></p>
+            <div class="form-container">
+                <input type="email" placeholder="Enter your email address" id="email" name="email" style="width: 95%;height: 30%;">
+                <input type="password" placeholder="Min. 8 characters" id="password" name="password" style="width: 95%;height: 30%;">
+                <label class="checkbox-label" style="margin-right: auto;">
+                    <input type="checkbox" class="checkbox-input" > Remember me.
+                </label>
+                <button style="background-color: blue; color: white; cursor: pointer;width: 30%;height:auto;margin-left: auto;border-radius: 12px;" >Sign in</button>
+            </div>
+
+            <p style="text-align: center; ">Or</p>
+            <p style="text-align: center; border: none; border-top: 1px solid #000;"> </p>
+            <div class="social-buttons">
+                <button><img src="google.png"> Continue with Google</button>
+                <button><img src="twitter.png"> Continue with Twitter</button>
+                <button><img src="github.png"> Continue with Github</button>
+                <button><img src="microsoft.png"> Continue with Microsoft</button>
+            </div>
+            <p class="underline">New?Join the community <button class="signup-button">Forgot password</button></p>
+        </div>
+        <div class="right-panel">
+            <div class="slideshow-container">
+                <!-- Slide 1 -->
+                <div class="slide">
+                    <div class="slide-content">
+                        <h3 style="color: blue;">Did you Know</h3>
+                        <h1>VirusTotal lookups can be automated</h1>
+                        <p>Community accounts come with an API key, with it you can write simple scripts to automate scans and lookups. Perform your file uploads programmatically and help the antivirus industry gather new threats, plug your malware hunting infrastructure into VirusTotal and enrich your analyses with advanced contextual information about malicious behaviors on the Internet.</p>
+                    </div>
+                    <div class="slider-navigation">
+                        <div class="arrow right-arrow" onclick="showSlide(2)">&#9654;</div>
+                    </div>
+                </div>
+                
+                        
+                <!-- Slide 2 -->
+                <div class="slide">
+                    <div class="slide-content">
+                        <h3 style="color: blue;">Did you Know</h3>
+                        <h1>Accounts give you access to VT Graph</h1>
+                        <p>A VirusTotal Community account allows you to use VT Graph, a tool to explore VirusTotal's dataset visually, discover threat commonalities and generate indicators of compromise. Try it out for free and understand the relationship between files, URLs, domains, IP addresses and other items encountered in an ongoing investigation.
+                            Discover graph</p>
+                    </div>
+                    <div class="slider-navigation">
+                        <div class="arrow left-arrow" onclick="showSlide(1)">&#9664;</div>
+                        <div class="arrow right-arrow" onclick="showSlide(3)">&#9654;</div>
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="slide">
+                    <div class="slide-content">
+                        <h3 style="color: blue;">Did you Know</h3>
+                        <h1>VirusTotal lookups can be automated</h1>
+                        <p>Community accounts come with an API key, with it you can write simple scripts to automate scans and lookups. Perform your file uploads programmatically and help the antivirus industry gather new threats, plug your malware hunting infrastructure into VirusTotal and enrich your analyses with advanced contextual information about malicious behaviors on the Internet.</p>
+                       
+                    </div>
+                    <div class="slider-navigation">
+                        <div class="arrow left-arrow" onclick="showSlide(2)">&#9664;</div>
+                        <div class="arrow right-arrow" onclick="showSlide(4)">&#9654;</div>
+                    </div>
+                </div>
+                <!-- Slide 4 -->
+                <div class="slide">
+                    <div class "slide-content">
+                        <h3 style="color: blue;">Did you Know</h3>
+                        <h1>VirusTotal develops YARA for the community</h1>
+                        <p>VirusTotal develops and maintains YARA, a tool aimed at (but not limited to) helping malware researchers to identify and classify malware samples. With YARA you can create descriptions of malware families (or whatever you want to describe) based on textual or binary patterns. Each description, a.k.a rule, consists of a set of strings and a boolean expression which determine its logic. YARA has become the de facto standard for malware hunting and it is a key component of enterprise services such as VT Hunting .</p>
+                        
+                    </div>
+                    <div class="slider-navigation">
+                        <div class="arrow left-arrow" onclick="showSlide(3)">&#9664;</div>
+                        <div class="arrow right-arrow" onclick="showSlide(5)">&#9654;</div>
+                    </div>
+                </div>
+                <!-- Slide 5 -->
+                <div class="slide">
+                    <div class="slide-content">
+                        <h3 style="color: blue;">Did you Know</h3>
+                        <h1>VirusTotal's browser extensions</h1>
+                        <p>Imagine you log into your Gmail account and find a suspicious email from your bank. The email informs you about an unauthorized access to your account and asks you to follow a link and provide your credentials to view the account access log. Wouldn't it be great if you could simply right-click on the link and check it against VirusTotal in order to understand whether it is legit or report a phishing site? Wouldn't it be great if you could do this just with that right-click, without having to navigate to VirusTotal and refer to the URL tab? This is what VirusTotal's browser extensions allow you to do, and they come in flavors for the most widespread browsers.
+                            Learn more</p>
+                           
+                    </div>
+                    <div class="slider-navigation">
+                        <div class="arrow left-arrow" onclick="showSlide(4)">&#9664;</div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <script>
+         showSlide(1);
+        function showSlide(slideIndex) {
+            const slides = document.getElementsByClassName("slide");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex - 1].style.display = "block";
+        }
+    </script>
+</body>
+</html>
