@@ -3,13 +3,14 @@ import re
 import subprocess
 from androguard.core.bytecodes import apk
 from flask import render_template, request
+from droid_deceptor.config import Paths
 
 # Paths
-manifest_features_file_path = 'droid_deceptor/public/manifest_features.txt'
-api_calls_file_path = 'droid_deceptor/public/api_calls.txt'
+manifest_features_file_path = Paths.manifest_features_file_path
+api_calls_file_path = Paths.api_calls_file_path
 
-apks_path = 'droid_deceptor/uploads/'
-source_code_path = 'droid_deceptor/outputs/'
+apks_path = Paths.apks_path
+source_code_path = Paths.source_code_path
 
 
 # read all permissions from file and make a list of it

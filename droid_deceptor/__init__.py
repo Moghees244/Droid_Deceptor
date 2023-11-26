@@ -1,13 +1,17 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from droid_deceptor.config import Config
+from droid_deceptor.models import db
 from droid_deceptor.routes.user_routes import user_routes
+from droid_deceptor.routes.auth_routes import auth_routes
 
-app = Flask(__name__)
 
+def create_app():
+    app = Flask(__name__)
+    
+    app.config.from_object(Config)
+    db.init_app(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:admin@localhost/droid_deceptor'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.register_blueprint(user_routes)
+    app.register_blueprint(auth_routes)
 
-db = SQLAlchemy(app)
-
-app.register_blueprint(user_routes)
+    return app

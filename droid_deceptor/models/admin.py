@@ -1,14 +1,15 @@
 from . import db
 from sqlalchemy import Column, String, event
-from sqlalchemy.orm import validates, relationship
+from sqlalchemy.orm import validates
 import bcrypt
 
 
-class User(db.Model):
-    __tablename__ = 'users'
+class Admin(db.Model):
+    __tablename__ = 'admins'
 
-    name = db.Column(db.String(255), nullable = False)
-    username = db.Column(db.String(255), unique=True, nullable=False, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
 
@@ -16,10 +17,10 @@ class User(db.Model):
     def validate_name(self, key, name):
         assert 1 <= len(name) <= 50, "Name must be between 1 and 50 characters"
         return name
-    
+
     @validates('username')
     def validate_username(self, key, username):
-        assert 1 <= len(username) <= 50, "Name must be between 1 and 50 characters"
+        assert 1 <= len(username) <= 50, "Username must be between 1 and 50 characters"
         return username
 
     @validates('email')
@@ -32,26 +33,26 @@ class User(db.Model):
         assert len(password) >= 6, "Password must be at least 6 characters"
         return password
 
-@event.listens_for(User, 'before_insert')
+@event.listens_for(Admin, 'before_insert')
 def before_insert_listener(mapper, connection, target):
     salt = bcrypt.gensalt(10)
     hashed_password = bcrypt.hashpw(target.password.encode('utf-8'), salt)
     target.password = hashed_password.decode('utf-8')
 
 
-def add_user(name, username, email, password):
-    user = User(name=name, username=username, email=email, password=password)
-    db.session.add(user)
+def add_admin(name, username, email, password):
+    admin = Admin(name=name, username=username, email=email, password=password)
+    db.session.add(admin)
     db.session.commit()
 
-def remove_user(user_id):
-    user = User.query.get(user_id)
-    if user:
-        db.session.delete(user)
+def remove_admin(admin_id):
+    admin = Admin.query.get(admin_id)
+    if admin:
+        db.session.delete(admin)
         db.session.commit()
 
-def show_user_by_username(username):
-    return User.query.filter_by(username=username).first()
+def show_admin_by_username(username):
+    return Admin.query.filter_by(username=username).first()
 
-def show_all_users():
-    return User.query.all()
+def show_all_admins():
+    return Admin.query.all()
