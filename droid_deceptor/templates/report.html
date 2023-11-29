@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Analysis Dashboard</title>
+  <!-- Add Chart.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #f8f8f8; /* Off-white background color */
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 80%;
+      margin: auto;
+      overflow: hidden;
+    }
+
+    .chart-container {
+      width: 20%; /* Adjust the width of the chart container */
+    }
+
+    .card {
+      width: 80%; /* Adjust width to accommodate the chart and some spacing */
+      background-color: #ffffff;
+      padding: 20px;
+      margin: 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .card h2 {
+      font-size: inherit; /* Make h2 size equal to the size of p */
+      color: red;
+      border-bottom: 2px solid #cccccc;
+      padding-bottom: 10px;
+      margin-bottom: 10px; /* Add margin for separation */
+    }
+
+    .buttons-row {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .reanalyze-btn,
+    .dropdown-btn {
+      padding: 5px;
+      background-color: #ffffff;
+      color: #333333;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      position: relative; /* Relative position for the dropdown arrow */
+      text-decoration: none;
+    }
+
+    .reanalyze-btn:hover,
+    .dropdown-btn:hover {
+      color: #007bff; /* Blue hover effect */
+      text-decoration: underline;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      top: 30px; /* Adjust the top position */
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 8px 12px;
+      text-decoration: none;
+      display: block;
+      width: auto;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .dropdown-btn.active .dropdown-content {
+      display: block;
+    }
+
+    .dropdown-btn::after {
+      content: '\25BC'; /* Unicode character for a downward-pointing triangle */
+      font-size: 7px;
+      margin-left: 5px;
+    }
+
+    @media screen and (max-width: 600px) {
+      .container {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+      }
+
+      .chart-container,
+      .card {
+        width: 100%;
+      }
+    }
+
+    .lower-Buttons {
+      background-color: whitesmoke;
+    }
+
+    .file-meta {
+      max-width: 30%; /* Adjust the width as needed */
+      text-align: right;
+      display: flex;
+      margin-left: auto;
+    }
+
+    .meta-size,
+    .meta-date {
+      font-size: 0.8em;
+    }
+
+    .meta-size,
+    .meta-date {
+      border-right: 1.5px solid #000; /* Add a vertical bar */
+      padding-right: 20px; /* Adjust spacing as needed */
+      margin-bottom: 5px; /* Add space between the spans */
+    }
+
+    .file-info {
+      font-size: 1.0em;
+      margin-bottom: 20px;
+    }
+
+    .container1 {
+      width: 90%;
+      margin: auto;
+    }
+
+    .header1 {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .header1 button,
+    button {
+      padding: 10px;
+      margin: 5px;
+      cursor: pointer;
+      background-color: white;
+      color: black;
+      border: 1px solid white;
+    }
+
+    .header1 button:hover,
+    button:hover {
+      color: blue;
+      text-decoration: underline;
+    }
+
+    /* Add styles to make Detection and Details buttons bold */
+    button#detection,
+    button#details,
+    button#Relations,
+    button#Behaviour,
+    button#Community {
+      font-weight: bold;
+      background-color: #f8f8f8;
+    }
+
+    button#join,
+    button#Automate {
+      background-color: #daf0ff;
+      border-color: #daf0ff;
+      font-weight: bold;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .detected {
+      color:red;
+    }
+
+    .hidden-table {
+      display: none;
+    }
+  
+  </style>
+</head>
+
+<body>
+ 
+  <div class="container">
+    <!-- Left side for the smaller circular chart -->
+    <div class="chart-container">
+      <canvas id="communityScoreChart" width="100" height="100"></canvas>
+    </div>
+    <!-- Right side for the File Analysis card -->
+
+
+
+
+   
+
+
+
+
+
+
+
+
+    <div class="card">
+      <h2>This section will contain information about file analysis</h2>
+      <div class="buttons-row">
+        <button class="reanalyze-btn" onclick="reanalyzeFile()">Reanalyze</button>
+        <div class="dropdown-btn" id="similarDropdownBtn" onclick="toggleDropdown('similarDropdown')">
+          Similar
+          <div id="similarDropdown" class="dropdown-content">
+            <a href="#">Option 1</a>
+            <a href="#">Option 2</a>
+            <a href="#">Option 3</a>
+          </div>
+        </div>
+        <div class="dropdown-btn" id="moreDropdownBtn" onclick="toggleDropdown('moreDropdown')">
+          More
+          <div id="moreDropdown" class="dropdown-content">
+            <a href="#">Option A</a>
+            <a href="#">Option B</a>
+            <a href="#">Option C</a>
+          </div>
+        </div>
+      </div>
+      <div class="file-meta">
+        <span class="meta-size"><b>Size</b><br>18.69 MB</span>
+        <span class="meta-date"><b> &nbsp;&nbsp;Analysis Date</b><br> 1 month ago</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        <img src="apk.png" alt="Logo Description" height="30" width="30">
+      </div>
+      <div>
+        <p class="file-info">422e018ca1a87e6cb18bcb9b7fa0dce1b6f6dddd0556241d57<br>cccf913ef46895
+          QR & Barcode Scanner_1.0.1_Apkpure (1).apk</p>
+        <button class="lower-Buttons" style="border-radius: 25px;border: none;">android</button>
+        <button class="lower-Buttons" style="border-radius: 25px;border: none;">apk</button>
+        <button class="lower-Buttons" style="border-radius: 25px;border: none;">reflection</button>
+        <button class="lower-Buttons" style="border-radius: 25px;border: none;">conatins-ef</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container1">
+    <button id="detection" onclick="showTable('results')">Detection</button>
+    <button id="details" onclick="showTable('DetaileData')">Details</button>
+    <button id="Relations">Relations</button>
+    <button id="Behaviour">Behaviour</button>
+    <button id="Community">Community</button>
+    <div class="header1" style="background-color:#daf0ff" style="width:100%">
+      <button id="join" onclick="joinCommunity()"><u>Join the VT Community</button></u>
+      <p>and enjoy additional community insights and crowdsourced detections, plus an API key to</p>
+      <button id="Automate" onclick="automateChecks()"><u>Do you want to automate checks?</button></u>
+    </div>
+    <table id="results">
+    <div>
+      
+        <tr>
+          <th>Security vendors' analysis</th>
+          <th>Do you want to automate checks?</th>
+        </tr>
+    </div>
+    <!-- Sample Row -->
+    <tr>
+      <td>TrendMicro-HouseCall</td>
+      <td class="detected">TROJ_GEN.R00201J723</td>
+    </tr>
+    <tr>
+      <td>AhnLab-V3</td>
+      <td class="Undetected">Undetected</td>
+    </tr>
+    <!-- More rows would be added here -->
+  </table>
+
+
+
+  <table id="DetaileData" class="hidden-table">
+    <div>
+      
+        <tr>
+          <th>Basic Properties</th>
+        </tr>
+    </div>
+    <!-- Sample Row -->
+    <div>
+      
+      <tr>
+        <th>History</th>
+      </tr>
+  </div>
+  <div>
+      
+    <tr>
+      <th>Names</th>
+    </tr>
+</div>
+<div>
+      
+  <tr>
+    <th>Android Info</th>
+  </tr>
+</div>
+<div>
+      
+  <tr>
+    <th>Summary</th>
+  </tr>
+</div>
+<div>
+      
+  <tr>
+    <th>Certificate Attributes</th>
+  </tr>
+</div>
+<div>
+      
+  <tr>
+    <th>Certificate Subject</th>
+  </tr>
+</div>
+<div>
+      
+  <tr>
+    <th>Certificate Issuer</th>
+  </tr>
+</div>
+      
+  <tr>
+    <th>Permissions</th>
+  </tr>
+</div>
+
+<div>
+      
+  <tr>
+    <th>Activites</th>
+  </tr>
+</div>
+
+<div>
+      
+  <tr>
+    <th>Services</th>
+  </tr>
+</div>
+<div>
+      
+  <tr>
+    <th>Receivers</th>
+  </tr>
+</div>
+<div>
+      
+  <tr>
+    <th>Providers</th>
+  </tr>
+</div>
+<div>
+      
+  <tr>
+    <th>Intent Filters By Action</th>
+  </tr>
+</div>
+<div>
+      
+  <tr>
+    <th>Intent Filters By Category</th>
+  </tr>
+</div>
+<div>
+      
+  <tr>
+    <th>Interesting Strings</th>
+  </tr>
+</div>
+<div>
+      
+  <tr>
+    <th>Bundle Info</th>
+  </tr>
+</div>
+<div>
+      
+  <tr>
+    <th>Warnings</th>
+  </tr>
+</div>
+<div>
+      
+  <tr>
+    <th>Contents Metadata</th>
+  </tr>
+</div>
+<div>
+      
+  <tr>
+    <th>Contained Files By Type</th>
+  </tr>
+</div>
+<div>
+      
+  <tr>
+    <th>Contained Files By Extension</th>
+  </tr>
+</div>
+
+    <!-- More rows would be added here -->
+  </table>
+
+
+  </div>
+
+
+  <script>
+    // JavaScript for updating and rendering the smaller circular chart
+    document.addEventListener("DOMContentLoaded", function () {
+      var ctx = document.getElementById('communityScoreChart').getContext('2d');
+      var communityScoreData = {
+        labels: ['Community Score'],
+        datasets: [{
+          data: [75], // Replace with your actual community score
+          backgroundColor: function (context) {
+            var value = context.dataset.data[context.dataIndex];
+            return value >= 50 ? 'rgba(255, 0, 0, 0.2)' : 'rgba(75, 192, 192, 0.2)';
+          },
+          borderColor: function (context) {
+            var value = context.dataset.data[context.dataIndex];
+            return value >= 50 ? 'rgba(255, 0, 0, 1)' : 'rgba(75, 192, 192, 1)';
+          },
+          borderWidth: 1
+        }]
+      };
+      var communityScoreChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: communityScoreData,
+        options: {
+          cutout: 80,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              enabled: false
+            }
+          }
+        }
+      });
+    });
+
+  function toggleDropdown(dropdownId) {
+    var dropdown = document.getElementById(dropdownId);
+    var btn = document.getElementById(dropdownId + 'Btn');
+    btn.classList.toggle('active');
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+  }
+
+  // Close dropdowns when clicking outside of them
+  document.addEventListener("click", function(event) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    for (var i = 0; i < dropdowns.length; i++) {
+      var dropdown = dropdowns[i];
+      var btn = document.getElementById(dropdown.id + 'Btn');
+      if (dropdown.style.display === 'block' && !event.target.closest('.dropdown-btn') && !event.target.closest('.dropdown-content')) {
+        dropdown.style.display = 'none';
+        btn.classList.remove('active');
+      }
+    }
+  });
+
+  function joinCommunity() {
+    // Placeholder for function to join the community
+    alert('Joining the VT Community...');
+  }
+
+  function automateChecks() {
+    // Placeholder for function to automate checks
+    alert('Automating checks...');
+  }
+
+  function showDetection() {
+    // Placeholder for function to show detection information
+    alert('Showing Detection...');
+  }
+
+  function showDetails() {
+    // Placeholder for function to show details information
+    alert('Showing Details...');
+  }
+
+
+  function showTable(tableId) {
+      // Get the table element
+      var table = document.getElementById(tableId);
+
+      // Hide all tables initially
+      var tables = document.querySelectorAll('table');
+      tables.forEach(function (t) {
+        t.classList.add('hidden-table');
+      });
+
+      // Show the selected table
+      table.classList.remove('hidden-table');
+    }
+</script>
+</body>
+</html>
