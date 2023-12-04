@@ -55,3 +55,12 @@ def show_user_by_username(username):
 
 def show_all_users():
     return User.query.all()
+
+def verify_login(username, password):
+    user = User.query.filter_by(username=username).first()
+
+    # Check if the user exists and the password is correct
+    if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+        return user
+    else:
+        return None

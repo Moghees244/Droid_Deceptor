@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash
-from droid_deceptor.models.user import add_user
+from droid_deceptor.models.user import add_user, verify_login
 
 def signup():
     if request.method == 'POST':
@@ -8,12 +8,7 @@ def signup():
         email = request.form['email']
         password = request.form['password']
 
-        # # Check if the username or email already exists
-        # if User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first():
-        #     flash('Username or email already exists. Please choose a different one.', 'error')
-        #     return redirect(url_for('signup'))
-
-        # Create a new user
+        #Create a new user
         add_user(name=name, username=username, email=email, password=password)
   
         flash('Account created successfully. You can now log in.', 'success')
@@ -27,5 +22,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
+        if verify_login(username, password):
+            return redirect(url_for('user.upload_apk'))
 
     return render_template('login.html')
