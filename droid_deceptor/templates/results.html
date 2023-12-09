@@ -5,24 +5,29 @@
 {% endblock %}
 
 {% block content %}
-<h1>Results</h1>
+    <div class="container mt-4">
+        <h1 class="display-4">Results</h1>
 
-{% if uploaded_file %}
-        <p>Uploaded Files: {{ uploaded_file }}</p>
-    {% endif %}
+        {% if uploaded_file %}
+            <p class="lead">Uploaded Files: {{ uploaded_file }}</p>
+        {% endif %}
 
-    {% if features %}
-        <h1>Extracted Features</h1>
-        <p>sha256 : {{features['sha256']}}</p>
-        {% for feature, value in features.items() %}
-            {% if value == 1 %}
-                <p>{{ feature }}</p>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
+        {% if features %}
+            <h2 class="mt-4">Extracted Features</h2>
+            <ul class="list-group">
+                <li class="list-group-item">sha256 : {{ features['sha256'] }}</li>
+                {% for feature, value in features.items() %}
+                    {% if value == 1 %}
+                        <li class="list-group-item">{{ feature }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
 
-    {% if not features %}
-        <h2>Invalid APK</h2>
-    {% endif %}    
-
+        {% if not features %}
+            <div class="alert alert-danger mt-4" role="alert">
+                <h2>Invalid APK</h2>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

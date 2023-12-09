@@ -1,6 +1,7 @@
 from . import db
 from sqlalchemy import Column, String, event
 from sqlalchemy.orm import validates, relationship
+from sqlalchemy.exc import IntegrityError
 import bcrypt
 
 
@@ -40,9 +41,19 @@ def before_insert_listener(mapper, connection, target):
 
 
 def add_user(name, username, email, password):
-    user = User(name=name, username=username, email=email, password=password)
-    db.session.add(user)
-    db.session.commit()
+    try:
+        user = User(name=name, username=username, email=email, password=password)
+        db.session.add(user)
+        db.session.commit()
+        return {"success": True, "message": "User created successfully."}
+    
+    except IntegrityError:
+        db.session.rollback()
+        return {"success": False, "message": "User with this username or email already exists."}
+    
+    except Exception as e:
+        db.session.rollback()
+        return {"success": False, "message": f"An error occurred: {str(e)}"}
 
 def remove_user(user_id):
     user = User.query.get(user_id)

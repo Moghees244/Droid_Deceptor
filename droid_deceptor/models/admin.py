@@ -1,6 +1,7 @@
 from . import db
 from sqlalchemy import Column, String, event
 from sqlalchemy.orm import validates
+from sqlalchemy.exc import IntegrityError
 import bcrypt
 
 
@@ -41,9 +42,19 @@ def before_insert_listener(mapper, connection, target):
 
 
 def add_admin(name, username, email, password):
-    admin = Admin(name=name, username=username, email=email, password=password)
-    db.session.add(admin)
-    db.session.commit()
+    try:
+        admin = Admin(name=name, username=username, email=email, password=password)
+        db.session.add(admin)
+        db.session.commit()
+        return {"success": True, "message": "User created successfully."}
+    
+    except IntegrityError:
+        db.session.rollback()
+        return {"success": False, "message": "User with this username or email already exists."}
+    
+    except Exception as e:
+        db.session.rollback()
+        return {"success": False, "message": f"An error occurred: {str(e)}"}
 
 def remove_admin(admin_id):
     admin = Admin.query.get(admin_id)
@@ -56,3 +67,18 @@ def show_admin_by_username(username):
 
 def show_all_admins():
     return Admin.query.all()
+
+def show_user_by_username(username):
+    return Admin.query.filter_by(username=username).first()
+
+def show_all_users():
+    return Admin.query.all()
+
+def verify_login(username, password):
+    admin = Admin.query.filter_by(username=username).first()
+
+    # Check if the user exists and the password is correct
+    if admin and bcrypt.checkpw(password.encode('utf-8'), admin.password.encode('utf-8')):
+        return admin
+    else:
+        return None

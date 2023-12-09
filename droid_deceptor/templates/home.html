@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="display-1 text-dark">DROID DECEPTOR</h2>
+                <p class="lead">Welcome to Droid Deceptor - Your Ultimate Solution!</p>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 text-center">
+                <a href="{{ url_for('auth.login') }}" class="btn btn-success btn-lg mr-2">Login</a>
+                <a href="{{ url_for('auth.signup') }}" class="btn btn-success btn-lg">Sign up</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
