@@ -1,10 +1,3 @@
-function handleFileUpload(input) {
-    const file = input.files[0];
-    if (file) {
-        console.log('Selected file:', file.name);
-    }
-}
-
 function toggleUrlInput() {
     const urlInput = document.getElementById("urlInput");
     const fileInputContainer = document.getElementById("fileInputContainer");
