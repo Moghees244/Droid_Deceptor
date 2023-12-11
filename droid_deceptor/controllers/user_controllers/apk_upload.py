@@ -1,6 +1,8 @@
 import os
+from flask_jwt_extended import jwt_required
 from flask import render_template, request, redirect, url_for
 
+@jwt_required(locations="cookies")
 def upload_apk():
     if request.method == "POST":
         return get_apk(request.files)

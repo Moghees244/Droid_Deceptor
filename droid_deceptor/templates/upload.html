@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}">
+
 {% endblock %}
 
 {% block title %}
@@ -9,65 +11,35 @@
 {% endblock %}
 
 {% block content %}
-    <!-- Your page content here -->
-    <div class="heading-container">
-        <h1>DROID DECEPTOR</h1>
-        <br><br>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Analyse suspicious files to detect malware and other <br>breaches, automatically share them with the security community</p>
-        <br><br><br><br>
-    </div>
-    <div class="button-container-below">
-        <div class="button-container-gray" id="fileButtonContainer">
-            <button class="button" onclick="showFileInput()">File</button>
-            <button class="button" onclick="toggleUrlInput()">URL</button>
-            <button class="button" onclick="toggleSearchInput()">Search</button>
-        </div>
-        <div class="file-input-container" id="fileInputContainer">
-            <!-- Add an icon or logo above the "Choose File" button -->
-            <br>
-            <div class="file-icon">
-                <img src="{{ url_for('static', filename='images/scanning-icon.png') }}" alt="Scanning Icon" style="width: 100px; height: 100px;"/>
-            </div>
-            <br>
-            <label for="fileInput" class="file-label">Choose File</label>
-            <form method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <input type="file" name="file" class="form-control-file">
+<div class="main"></div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="display-4 text-center mb-4">Upload APK File</h1>
+
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="file" class="form-label">Choose APK File:</label>
+                            <input type="file" name="file" class="form-control-file">
+                        </div>
+                        <div class="wrap">
+                        <button type="submit" class="button">Upload</button>
+                    </div>
+                    </form>
+
+                    <!-- Display success or error messages here -->
+                    {% if message %}
+                        <div class="alert alert-info mt-4" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endif %}
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Upload</button>
-            </form>
+            </div>
         </div>
-        <!-- Add the URL image container as before -->
-        <div class="file-input-container" id="urlImageContainer" style="display: none;">
-            <img id="urlImage" src="url-image.png" alt="URL Icon" style="width: 100px; height: 100px;">
-        </div>
-        <!-- Add the Search image container -->
-        <div class="file-input-container" id="searchImageContainer" style="display: none;">
-            <img id="searchImage" src="search-icon.png" alt="Search Icon" style="width: 100px; height: 100px;">
-            <p style="text-align: center;">Search for a hash, domain, IP address, URL or gain additional context and threat landscape visibility with VT ENTERPRISE.</p>
-        </div>
-        <input type="text" id="urlInput" class="url-input" placeholder="Search or Scan a URL">
-        <input type="text" id="searchInput" class="search-input" placeholder="URL, IP address,domain, or file hash">
     </div>
-    <br><br><br><br>
-    <br><br><br>
-    <p class="centered-paragraph">  By submitting data above, you are agreeing to our Terms of Service and Privacy Policy<br> and to the sharing of your Sample submission with the security community.<br> Please do not submit any personal information; VirusTotal is not responsible for <br>the contents of your submission.<br> Learn more.</p>
+</div>
 
-    <div class="button-container">
-        <button class="button">Intelligence</button>
-        <button class="button">Hunting</button>
-        <button class="button">Graph</button>
-        <button class="button">API</button>
-    </div>
-
-    <!-- Button container for icons on the top right -->
-    <div class="button-container-top-right">
-        <button class="button"><i class="fas fa-google-drive"></i></button>
-        <button class="button"><i class="fas fa-comment"></i></button>
-        <button class="button"><i class="fas fa-plane"></i></button>
-        <a href="{{ url_for('auth.signup') }}" class="button signup">Sign Up</button>
-        <a href="{{ url_for('auth.login') }}" class="button signup">Login</button>
-    </div>
-
-    <script src="{{ url_for('static', filename='js/upload.js') }}"></script>
 {% endblock %}

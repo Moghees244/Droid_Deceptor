@@ -3,6 +3,7 @@ import re
 import subprocess
 from androguard.core.bytecodes import apk
 from flask import render_template, request
+from flask_jwt_extended import jwt_required
 from droid_deceptor.config import Paths
 
 # Paths
@@ -117,7 +118,7 @@ def extract_api_calls(filename):
     subprocess.run(["rm", "-r", os.path.join(source_code_path, filename[:-4])])
     return apk_api_calls
 
-
+@jwt_required(locations="cookies")
 def display_results():
     uploaded_file = request.args.get('uploaded_file', '')
     features = extract_features(uploaded_file)

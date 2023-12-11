@@ -1,4 +1,6 @@
-from flask import render_template, request, redirect, url_for, flash
+from datetime import timedelta
+from flask import render_template, request, redirect, url_for, jsonify
+from flask_jwt_extended import create_access_token, set_access_cookies
 from droid_deceptor.models.user import add_user, verify_login
 
 def signup():
@@ -27,7 +29,12 @@ def login():
         password = request.form['password']
 
         if verify_login(username, password):
-            return redirect(url_for('user.upload_apk'))
+            access_token = create_access_token(identity=username, expires_delta=timedelta(days=1))
+            # Set the JWT in cookies
+            response = redirect(url_for('user.upload_apk'))
+            set_access_cookies(response, access_token)
+
+            return response
         else:
             error_message = "Incorrect Credentials."
 

@@ -1,148 +1,86 @@
-* {
-    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    }
-.button-container {
-    position: absolute;
-    top: 20px;
-    left: 20px;
+html, body {
+  height: 100%;
+}
+
+.wrap {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .button {
-    margin-right: 10px;
-    padding: 10px 20px;
-    color: black; /* Text color is now black */
-    background-color: white; /* Background color is now white */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  min-width: 300px;
+  min-height: 60px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+  color: #313133;
+  background: #4FD1C5;
+background: linear-gradient(90deg, rgba(129,230,217,1) 0%, rgba(79,209,197,1) 100%);
+  border: none;
+  border-radius: 1000px;
+  box-shadow: 12px 12px 24px rgba(79,209,197,.64);
+  transition: all 0.3s ease-in-out 0s;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  padding: 10px;
+  }
+
+button::before {
+content: '';
+  border-radius: 1000px;
+  min-width: calc(300px + 12px);
+  min-height: calc(60px + 12px);
+  border: 6px solid #00FFCB;
+  box-shadow: 0 0 60px rgba(0,255,203,.64);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all .3s ease-in-out 0s;
 }
 
-/* Style for the "Sign Up" button */
-.button.signup {
-    background-color: rgba(0, 123, 255, 0.5); /* Blue with blur effect */
-    backdrop-filter: blur(10px); /* Blur effect */
+.button:hover, .button:focus {
+  color: #313133;
+  transform: translateY(-6px);
 }
 
-/* Style for the heading text and its container */
-.heading-container {
-    text-align: center; /* Center the text horizontally */
-    margin-top: 40px;
-    padding: 10px 100px; 
-    
-    /* Add some top margin for spacing */
+button:hover::before, button:focus::before {
+  opacity: 1;
 }
 
-h1 {
-    font-size: 60px; /* Increase the font size to your desired value */
-    font-weight: bold;
-    color: blue;
-    
-     /* Change text color to blue */
+button::after {
+  content: '';
+  width: 30px; height: 30px;
+  border-radius: 100%;
+  border: 6px solid #00FFCB;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ring 1.5s infinite;
 }
 
-/* Style for the button container below the heading */
-.button-container-below {
-    text-align: center;
-    margin-top: 20px;
+button:hover::after, button:focus::after {
+  animation: none;
+  display: none;
 }
 
-/* Style for the URL input field */
-.url-input,
-.search-input {
-display: none;
-margin-top: 10px;
-width: 60%; /* Adjust the width to your preference */
-height: 30px; /* Adjust the height to your preference */
-margin: 0 auto; /* Center-align the input fields horizontally */
-}
-
-
-/* Style for the bottom columns */
-.bottom-columns {
-    display: flex;
-    justify-content: space-between;
-    background-color: #f0f0f0;
-    padding: 20px;
-}
-
-.column {
-    flex-basis: calc(20% - 20px); /* 20% width with some margin in between */
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-}
-
-/* Style for the rows within the VirusTotal column */
-.virus-total-column .row {
-    padding: 10px 0;
-    border-bottom: 1px solid #ccc;
-}
-
-
-/* Style for the button container with light gray background */
-.button-container-gray {
-    background-color:gray;
-    padding: 10px;
-    width: 50%;
-    border-radius: 5px;
-    display: inline-block;
-}
-
-/* Style for the file input */
-.file-input {
-    display: none; /* Hide the file input initially */
-}
-
-/* Correct the position of the top-right buttons */
-.button-container-top-right {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
-.centered-paragraph {
-    text-align: center;
-}
-
-
-/* Style for the button container with gray background */
-.button-container-gray {
-background-color:whitesmoke;
-padding: 10px;
-width: 50%;
-border-radius: 5px;
-display: inline-block;
-text-align: center; /* Center-align the text */
-}
-
-/* Style for the buttons inside the container */
-.button-container-gray .button {
-text-decoration: none; /* Remove underline from the link text */
-color: black; /* Set link text color to white */
-padding: 10px 50px; /* Increase the width of the buttons by adjusting padding */
-background-color: white; /* Set the initial background color of the buttons */
-transition: background-color 0.3s ease, text-decoration 0.3s ease; /* Add transition for smoother hover effect */
-}
-
-/* Add a blue hover effect and underline on hover for individual buttons */
-.button-container-gray .button:hover {
-background-color: blue; /* Change background color to blue on hover */
-text-decoration: underline; /* Add an underline on hover */
-cursor: pointer;
-}
-
-
-
-
-.file-input-container {
-    text-align: center;
-    display: none;
-}
-
-.file-input {
-    display: inline-block;
-}
-.file-label
-{
-    margin-bottom: 10px;
+@keyframes ring {
+  0% {
+    width: 30px;
+    height: 30px;
+    opacity: 1;
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
 }

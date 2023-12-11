@@ -2,6 +2,7 @@ androguard==3.3.5
 asn1crypto==1.5.1
 asttokens==2.4.0
 backcall==0.2.0
+bcrypt==4.0.1
 blinker==1.6.2
 click==8.1.7
 colorama==0.4.6
@@ -10,6 +11,7 @@ cycler==0.12.1
 decorator==5.1.1
 executing==2.0.0
 Flask==3.0.0
+Flask-JWT-Extended==4.5.3
 Flask-SQLAlchemy==3.1.1
 fonttools==4.43.1
 future==0.18.3
@@ -38,6 +40,7 @@ ptyprocess==0.7.0
 pure-eval==0.2.2
 pydot==1.4.2
 Pygments==2.16.1
+PyJWT==2.8.0
 pyparsing==3.1.1
 python-dateutil==2.8.2
 pytz==2023.3.post1

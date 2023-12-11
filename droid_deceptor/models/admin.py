@@ -63,15 +63,13 @@ def remove_admin(admin_id):
         db.session.commit()
 
 def show_admin_by_username(username):
-    return Admin.query.filter_by(username=username).first()
+    user = Admin.query.filter_by(username=username).first()
+
+    if user:
+        return user
+    return None
 
 def show_all_admins():
-    return Admin.query.all()
-
-def show_user_by_username(username):
-    return Admin.query.filter_by(username=username).first()
-
-def show_all_users():
     return Admin.query.all()
 
 def verify_login(username, password):
