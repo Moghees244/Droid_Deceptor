@@ -1,25 +1,66 @@
 {% extends 'base.html' %}
 
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background_animation.css') }}">
+{% endblock %}
+
 {% block title %}
     Admin Sign Up
 {% endblock %}
 
 {% block content %}
-    <h2>Admin Sign up</h2>
-    <form method="post" action="{{ url_for('auth.admin_signup') }}">
-        <label for="name">Name:</label>
-        <input type="text" name="name" required><br>
 
-        <label for="username">Username:</label>
-        <input type="text" name="username" required><br>
+  <section> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> 
 
-        <label for="email">Email:</label>
-        <input type="text" name="email" required><br>
+   <div class="signin"> 
 
-        <label for="password">Password:</label>
-        <input type="password" name="password" required><br>
+    <div class="content"> 
 
-        <input type="submit" value="Sign up">
-    </form>
-    <p>Already have an account? <a href="{{ url_for('auth.admin_login') }}">Login</a></p>
-{% endblock %}
+     <h2>Sign Up</h2> 
+
+    {% if error %}
+        <div class="alert alert-danger text-center" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+
+     <form method="post" action="{{ url_for('auth.admin_signup') }}"class="form"> 
+
+        <div class="inputBox"> 
+            <input type="text" name="name" required> <i>Name</i> 
+        </div> 
+
+      <div class="inputBox"> 
+
+       <input type="text" name="username" required> <i>Username</i> 
+
+      </div> 
+
+      <div class="inputBox"> 
+        <input type="email" name="email" required> <i>Email</i> 
+    </div> 
+
+      <div class="inputBox"> 
+
+       <input type="password" name="password" required> <i>Password</i> 
+
+      </div> 
+
+      <div class="links"> <a href="">Already Have An Account? </a> <a href="{{ url_for('auth.admin_login') }}">Log In</a> 
+
+      </div> 
+
+      <div class="inputBox"> 
+
+       <input type="submit" value = "Sign Up"> 
+
+      </div> 
+
+    </form> 
+
+    </div> 
+
+   </div> 
+
+  </section> 
+  {% endblock %}

@@ -1,22 +1,28 @@
 {% extends 'base.html' %}
 
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+
 {% block title %}
     Home
 {% endblock %}
 
 {% block content %}
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h2 class="display-1 text-dark">DROID DECEPTOR</h2>
-                <p class="lead">Welcome to Droid Deceptor - Your Ultimate Solution!</p>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-12 text-center">
-                <a href="{{ url_for('auth.login') }}" class="btn btn-success btn-lg mr-2">Login</a>
-                <a href="{{ url_for('auth.signup') }}" class="btn btn-success btn-lg">Sign up</a>
+    <div class="main"></div>
+    <div class="container-fluid d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+        <div class="text-center">
+            <img src="{{url_for('static', filename='images/logo.png')}}" alt="Logo">
+            <h2 class="display-2">DROID DECEPTOR</h2>
+            <p class="lead">Welcome to Droid Deceptor - Your Ultimate Solution!</p>
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-dark btn-lg mr-2">Login</a>
+                    <a href="{{ url_for('auth.signup') }}" class="btn btn-dark btn-lg">Sign up</a>
+                </div>
             </div>
         </div>
     </div>
+    <script src="{{ url_for('static', filename='js/home.js') }}"></script>
 {% endblock %}
+

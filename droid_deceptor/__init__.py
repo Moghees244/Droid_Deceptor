@@ -6,7 +6,7 @@ from droid_deceptor.routes.auth_routes import auth_routes
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='public')
     
     app.config.from_object(Config)
     db.init_app(app)
