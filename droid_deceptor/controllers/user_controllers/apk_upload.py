@@ -2,14 +2,13 @@ import os
 from flask_jwt_extended import jwt_required
 from flask import render_template, request, redirect, url_for
 
-@jwt_required(locations="cookies")
+@jwt_required()
 def upload_apk():
     if request.method == "POST":
         return get_apk(request.files)
 
     # Render the 'upload.html' template for the 'GET' request
     return render_template('upload.html')
-
 
 def get_apk(files):
     UPLOAD_FOLDER = 'droid_deceptor/uploads'

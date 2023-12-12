@@ -846,3 +846,20 @@ button {
 		box-shadow: 0 0 0 2px var(--c-gray-800), 0 0 0 4px var(--c-gray-300);
 	}
 }
+
+.tabs a {
+	cursor: pointer;
+	margin-right: 10px;
+  }
+
+.tabs a.active {
+	font-weight: bold;
+  }
+
+.transfer-section,.payment-section, .service-section {
+	display: none;
+  }
+
+.transfer-section.active,.payment-section.active,.service-section.active {
+	display: block;
+  }

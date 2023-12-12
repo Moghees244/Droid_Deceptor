@@ -2,7 +2,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from droid_deceptor.models.admin import show_admin_by_username
 from flask import render_template
 
-@jwt_required(locations="cookies")
+@jwt_required()
 def dashboard():
     current_user = get_jwt_identity()
 

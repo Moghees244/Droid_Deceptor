@@ -2,6 +2,7 @@
 
 {% block links %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
 {% endblock %}
 
 {% block title %}
@@ -10,19 +11,20 @@
 
 {% block content %}
     <div class="main"></div>
-    <div class="container-fluid d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+    <div class="container-fluid d-flex justify-content-center" style="min-height: 100vh;">
         <div class="text-center">
             <img src="{{url_for('static', filename='images/logo.png')}}" alt="Logo">
-            <h2 class="display-2">DROID DECEPTOR</h2>
-            <p class="lead">Welcome to Droid Deceptor - Your Ultimate Solution!</p>
+            <h2 class="display-3">DROID DECEPTOR</h2>
+            <p class="lead">The Ultimate Android Exploitation Framework!</p>
+            <br><br><br>
             <div class="row mt-3">
-                <div class="col-12 text-center">
-                    <a href="{{ url_for('auth.login') }}" class="btn btn-dark btn-lg mr-2">Login</a>
-                    <a href="{{ url_for('auth.signup') }}" class="btn btn-dark btn-lg">Sign up</a>
+                <div class="col-12 text-center wrapper">
+                    <a href="{{ url_for('auth.login') }}" class="box">Login</a>
+                    <a href="{{ url_for('auth.signup') }}" class="box">Sign up</a>
                 </div>
             </div>
         </div>
     </div>
+
     <script src="{{ url_for('static', filename='js/home.js') }}"></script>
 {% endblock %}
-

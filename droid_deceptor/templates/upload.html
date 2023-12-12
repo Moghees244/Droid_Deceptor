@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}">
 
@@ -13,33 +14,41 @@
 {% block content %}
 <div class="main"></div>
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="display-4 text-center mb-4">Upload APK File</h1>
+<div class="app">
+	<div class="card-body">
+		<div class="my-image-container">
+			<img class="my-logo" src="{{url_for('static', filename='images/logo.png')}}" alt="Logo">
+		</div>
+		<div>
+		<h1 class="logo-title">
+			<span>Welcome</span>
+			<span>User</span>
+		</h1>
+		<br>
+		<form action="{{ url_for('auth.logout') }}" method="post" class="form-left-side">
+			<button class="save-button">
+				Logout
+			</button>
+		</form>
+	</div>
 
-                    <form method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="file" class="form-label">Choose APK File:</label>
-                            <input type="file" name="file" class="form-control-file">
-                        </div>
-                        <div class="wrap">
-                        <button type="submit" class="button">Upload</button>
-                    </div>
-                    </form>
+		<form method="post" enctype="multipart/form-data" class="center-form">
+			<div class="form-group">
+				<label for="file" class="form-label">Upload APK</label><br>
+				<input type="file" name="file" class="form-control-file">
+			</div>
+			<br><br>
+			<button class="save-button" type="submit">
+				Upload
+			</button>
+		</form>
 
-                    <!-- Display success or error messages here -->
-                    {% if message %}
-                        <div class="alert alert-info mt-4" role="alert">
-                            {{ message }}
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </div>
+		<!-- Display success or error messages here -->
+		{% if message %}
+			<div class="alert alert-info mt-4 custom-alert" role="alert">
+				{{ message }}
+			</div>
+		{% endif %}
+	</div>
 </div>
-
 {% endblock %}

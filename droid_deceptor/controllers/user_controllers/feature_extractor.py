@@ -118,7 +118,7 @@ def extract_api_calls(filename):
     subprocess.run(["rm", "-r", os.path.join(source_code_path, filename[:-4])])
     return apk_api_calls
 
-@jwt_required(locations="cookies")
+@jwt_required()
 def display_results():
     uploaded_file = request.args.get('uploaded_file', '')
     features = extract_features(uploaded_file)

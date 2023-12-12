@@ -1,86 +1,98 @@
-html, body {
-  height: 100%;
+.center-form {
+  text-align: center;
 }
 
-.wrap {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.form-group {
+  margin-bottom: 15px;
 }
 
-.button {
-  min-width: 300px;
-  min-height: 60px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 22px;
-  text-transform: uppercase;
-  letter-spacing: 1.3px;
-  font-weight: 700;
-  color: #313133;
-  background: #4FD1C5;
-background: linear-gradient(90deg, rgba(129,230,217,1) 0%, rgba(79,209,197,1) 100%);
+.form-label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 40px;
+  color: #fff; /* Adjust the color as needed */
+}
+
+.form-control-file {
+  display: block;
+  width: 40%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc; /* Adjust the border color as needed */
+  border-radius: 4px;
+  margin: 0 auto; 
+}
+
+.styled-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
   border: none;
-  border-radius: 1000px;
-  box-shadow: 12px 12px 24px rgba(79,209,197,.64);
-  transition: all 0.3s ease-in-out 0s;
+  border-radius: 5px;
   cursor: pointer;
-  outline: none;
-  position: relative;
-  padding: 10px;
-  }
-
-button::before {
-content: '';
-  border-radius: 1000px;
-  min-width: calc(300px + 12px);
-  min-height: calc(60px + 12px);
-  border: 6px solid #00FFCB;
-  box-shadow: 0 0 60px rgba(0,255,203,.64);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: all .3s ease-in-out 0s;
 }
 
-.button:hover, .button:focus {
-  color: #313133;
-  transform: translateY(-6px);
+.styled-button:hover {
+  background-color: #45a049;
 }
 
-button:hover::before, button:focus::before {
-  opacity: 1;
+.my-image-container {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: 10vh;
+  margin-bottom: 10px;
 }
 
-button::after {
-  content: '';
-  width: 30px; height: 30px;
-  border-radius: 100%;
-  border: 6px solid #00FFCB;
-  position: absolute;
-  z-index: -1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: ring 1.5s infinite;
+
+.my-logo {
+  max-width: 10%; /* Make the image responsive */
+  height: auto;
+
 }
 
-button:hover::after, button:focus::after {
-  animation: none;
-  display: none;
+.custom-alert {
+  max-width: 500px; /* Set the desired maximum width */
+  width: 100%; /* Ensure it takes full width if the content is smaller than the max-width */
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgba(163, 39, 39, 0.473);
+  color: #fff;
 }
 
-@keyframes ring {
-  0% {
-    width: 30px;
-    height: 30px;
-    opacity: 1;
-  }
-  100% {
-    width: 300px;
-    height: 300px;
-    opacity: 0;
-  }
+.form-left-side {
+  
+}
+
+
+.form-control-file {
+  display: block;
+  width: 40%;
+  padding: 8px;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: transparent; /* Set background color to transparent */
+}
+
+/* Additional styles to hide the default file input text */
+.form-control-file::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.form-control-file::before {
+  content: 'Choose File';
+  display: inline-block;
+  background-color: transparent;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: solid var(--c-gray-500);
+}
+
+.form-control-file:hover::before {
+  background-color: transparent;
 }
