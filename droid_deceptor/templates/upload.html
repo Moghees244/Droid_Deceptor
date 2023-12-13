@@ -16,21 +16,24 @@
 
 <div class="app">
 	<div class="card-body">
-		<div class="my-image-container">
-			<img class="my-logo" src="{{url_for('static', filename='images/logo.png')}}" alt="Logo">
-		</div>
-		<div>
 		<h1 class="logo-title">
 			<span>Welcome</span>
-			<span>User</span>
+			{% if user %}
+			<span>{{ user }}</span>
+			{% endif %}
 		</h1>
-		<br>
+		<div>
+		</div>
+
 		<form action="{{ url_for('auth.logout') }}" method="post" class="form-left-side">
 			<button class="save-button">
 				Logout
 			</button>
 		</form>
-	</div>
+
+		<div class="my-image-container">
+			<img class="my-logo" src="{{url_for('static', filename='images/logo.png')}}" alt="Logo">
+		</div>
 
 		<form method="post" enctype="multipart/form-data" class="center-form">
 			<div class="form-group">
@@ -43,6 +46,9 @@
 			</button>
 		</form>
 
+	</div>
+
+		
 		<!-- Display success or error messages here -->
 		{% if message %}
 			<div class="alert alert-info mt-4 custom-alert" role="alert">

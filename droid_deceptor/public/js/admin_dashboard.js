@@ -1,7 +1,7 @@
   function changeTab(tabName) {
     // Get all tabs and sections
     const tabs = document.querySelectorAll('.tabs a');
-    const sections = document.querySelectorAll('.transfer-section, .payment-section, .service-section');
+    const sections = document.querySelectorAll('.transfer-section, .payment-section, .service-section, .f-button');
 
     // Remove 'active' class from all tabs and sections
     tabs.forEach(tab => tab.classList.remove('active'));

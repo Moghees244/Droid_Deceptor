@@ -38,16 +38,16 @@
 
 .my-image-container {
   display: flex;
-  justify-content: left;
-  align-items: center;
-  height: 10vh;
-  margin-bottom: 10px;
+  margin-top: 0%;
+  justify-content: center; /* Center horizontally */
+  height: 20vh;
 }
 
 
 .my-logo {
   max-width: 10%; /* Make the image responsive */
   height: auto;
+  justify-content: center;
 
 }
 
@@ -61,7 +61,8 @@
 }
 
 .form-left-side {
-  
+  margin-top: 3%;
+  margin-left: 1%;
 }
 
 
@@ -95,4 +96,10 @@
 
 .form-control-file:hover::before {
   background-color: transparent;
+}
+
+@media only screen and (max-width: 600px) {
+  .my-image-container {
+    display: none;
+  }
 }

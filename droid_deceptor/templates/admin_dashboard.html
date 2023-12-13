@@ -40,6 +40,10 @@
 				<a onclick="changeTab('admins')">
 					Admins
 				</a>
+
+				<a onclick="changeTab('users')">
+					Users
+				</a>
 				<a></a>
 				</div>
 		</div>
@@ -62,37 +66,19 @@
                 </button>
             </div>
             <div class="tiles">
-                <article class="tile">
+				{% if feedbacks %}
+				{% for feedback in feedbacks %}
+				<article class="tile">
                     <div class="tile-header">
-                        <i class="ph-lightning-light"></i>
+                        <i class="ph-lightning"></i>
                         <h3>
-                            <span>Moghees</span>
-                            <span>The Report Was Accurate.</span>
+                            <span>{{ feedback.username }}</span>
+                            <span>{{ feedback.feedback }}</span>
                         </h3>
                     </div>
                 </article>
-
-				<article class="tile">
-                    <div class="tile-header">
-                        <i class="ph-lightning-light"></i>
-                        <h3>
-                            <span>Bilal</span>
-                            <span>All features were extracted properly.</span>
-                        </h3>
-                    </div>
-                </article>
-
-				<article class="tile">
-                    <div class="tile-header">
-                        <i class="ph-lightning-light"></i>
-                        <h3>
-                            <span>Wahab</span>
-                            <span>It was slow but results were Accurate.</span>
-                        </h3>
-                    </div>
-                </article> 
-				
-                
+                {% endfor %}
+				{% endif %}
             </div>
             
         </section>
@@ -243,53 +229,31 @@
 
 
     </div>
+	<br>
     <div class="app-body-sidebar">
         <section class="payment-section" id="admins">
             <h2>Admins</h2>
             <div class="payment-section-header">
             </div>
-            <div class="payments">
-                <div class="payment">
-                    <div class="card green">
-                        <span>69</span>
-						<span>moghees32</span>
-                    </div>
-                    <div class="payment-details">
-                        <h3>f200244@cfd.nu.edu.pk</h3>
-                        <div>
-                            <span>Moghees Ahmad</span>
-                        </div>
-                    </div>
-                </div>
-				<br>
-                <div class="payments">
+
+			{% if admins %}
+				{% for admin in admins %}
+				<div class="payments">
 					<div class="payment">
-						<div class="card olive">
-							<span>id</span>
-							<span>username</span>
+						<div class="card green">
+							<span>{{admin.id}}</span>
+							<span>{{admin.username}}</span>
 						</div>
 						<div class="payment-details">
-							<h3>email</h3>
+							<h3>{{admin.email}}</h3>
 							<div>
-								<span>Name</span>
+								<span>{{admin.name}}</span>
 							</div>
 						</div>
 					</div>
 					<br>
-					<div class="payments">
-						<div class="payment">
-							<div class="card grey">
-								<span>id</span>
-								<span>username</span>
-							</div>
-							<div class="payment-details">
-								<h3>email</h3>
-								<div>
-									<span>Name</span>
-								</div>
-							</div>
-						</div>
-            </div>
+				{% endfor %}
+			{% endif %}
 			<br>
             <div class="payment-section-footer">
 				<form action="{{ url_for('auth.admin_signup') }}" method="get">
@@ -300,6 +264,36 @@
             </div>
         </section>
     </div>
+
+	<div class="app-body-sidebar">
+		<section class="payment-section" id="users">
+			<h2>Users</h2>
+			<div class="payment-section-header">
+			</div>
+	
+			{% if users %}
+				{% for user in users %}
+				<div class="payments">
+					<div class="payment">
+						<div class="card grey">
+							<span>{{user.id}}</span>
+							<span>{{user.username}}</span>
+						</div>
+						<div class="payment-details">
+							<h3>{{user.email}}</h3>
+							<div>
+								<span>{{user.name}}</span>
+							</div>
+						</div>
+					</div>
+					<br>
+				{% endfor %}
+			{% endif %}
+			<br>
+		</section>
+	</div>
+</div>
+</div>
 </div>
 </div>
 

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block title %}
-    Admin Sign Up
+    Add Admin
 {% endblock %}
 
 {% block content %}
@@ -16,7 +16,7 @@
 
     <div class="content"> 
 
-     <h2>Sign Up</h2> 
+     <h2>Add Admin</h2> 
 
     {% if error %}
         <div class="alert alert-danger text-center" role="alert">
@@ -46,13 +46,13 @@
 
       </div> 
 
-      <div class="links"> <a href="">Already Have An Account? </a> <a href="{{ url_for('auth.admin_login') }}">Log In</a> 
+      <div class="links"> <a href=""> </a> <a href="{{ url_for('auth.admin_login') }}"></a> 
 
       </div> 
 
       <div class="inputBox"> 
 
-       <input type="submit" value = "Sign Up"> 
+       <input type="submit" value = "Add Admin"> 
 
       </div> 
 

@@ -1,6 +1,6 @@
 from datetime import timedelta
 from flask import render_template, request, redirect, url_for, jsonify
-from flask_jwt_extended import create_access_token, set_access_cookies, verify_jwt_in_request, unset_jwt_cookies, get_jwt
+from flask_jwt_extended import create_access_token, set_access_cookies, verify_jwt_in_request, unset_jwt_cookies, get_jwt_identity
 from droid_deceptor.models.user import add_user, verify_login
 
 def signup():

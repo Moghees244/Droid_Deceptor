@@ -863,3 +863,19 @@ button {
 .transfer-section.active,.payment-section.active,.service-section.active {
 	display: block;
   }
+
+.my-feedback-input {
+	max-width: 800px; /* Set your desired max-width */
+    margin: 0 auto; /* Center the alert horizontally */
+    padding: 15px; /* Add padding for better spacing */
+    border: 1px solid grey; /* Set the border color and thickness */
+    border-radius: 5px; /* Optional: Add rounded corners */
+    background-color: #f8f9fa; /* Set the background color */
+}
+
+/* Responsive styles */
+@media (max-width: 767px) {
+    .my-feedback-alert {
+        max-width: 300%; /* Adjust for smaller screens */
+    }
+}

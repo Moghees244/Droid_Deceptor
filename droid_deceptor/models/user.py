@@ -1,4 +1,5 @@
 from . import db
+import re
 from sqlalchemy import Column, String, event
 from sqlalchemy.orm import validates, relationship
 from sqlalchemy.exc import IntegrityError
@@ -16,21 +17,25 @@ class User(db.Model):
     @validates('name')
     def validate_name(self, key, name):
         assert 1 <= len(name) <= 50, "Name must be between 1 and 50 characters"
+        assert all(char.isalpha() or char.isspace() for char in name), "Name must contain only letters and spaces"
         return name
     
     @validates('username')
     def validate_username(self, key, username):
         assert 1 <= len(username) <= 50, "Name must be between 1 and 50 characters"
+        assert all(char.isalnum() for char in username), "Username must contain only letters, numbers"
         return username
 
     @validates('email')
     def validate_email(self, key, email):
-        assert '@' in email and '.' in email, "Invalid email format"
+        email_pattern = re.compile(r'^[a-zA-Z][a-zA-Z0-9_.+-]*@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')
+        # Use assert to check if the email is valid
+        assert email_pattern.match(email), "Invalid email format"
         return email
 
     @validates('password')
     def validate_password(self, key, password):
-        assert len(password) >= 6, "Password must be at least 6 characters"
+        assert len(password) >= 8, "Password must be at least 8 characters"
         return password
 
 @event.listens_for(User, 'before_insert')

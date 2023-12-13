@@ -13,6 +13,8 @@ api_calls_file_path = Paths.api_calls_file_path
 apks_path = Paths.apks_path
 source_code_path = Paths.source_code_path
 
+def convert_bytes_to_megabytes(size_in_bytes):
+    return round(size_in_bytes / (1024.0 * 1024.0), 3)
 
 # read all permissions from file and make a list of it
 def get_feature_list(file_path):
@@ -69,7 +71,14 @@ def extract_features(file_name):
         result = subprocess.run(['sha256sum', os.path.join(apks_path, file_name)], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
         sha256_hash = result.stdout.split()[0]
         app_data['sha256'] = sha256_hash
+
+        result = subprocess.run(['md5sum', os.path.join(apks_path, file_name)], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
+        md5_hash = result.stdout.split()[0]
+        app_data['md5'] = md5_hash
         
+        apk_size = os.path.getsize(os.path.join(apks_path, file_name))
+        app_data['size'] = convert_bytes_to_megabytes(apk_size)
+
         # return all the features
         return app_data
 
@@ -123,5 +132,5 @@ def display_results():
     uploaded_file = request.args.get('uploaded_file', '')
     features = extract_features(uploaded_file)
 
-    return render_template('results.html', message="File Uploaded", uploaded_file=uploaded_file, features=features)
+    return render_template('results.html', status_message=request.args.get('status_message', ''), uploaded_file=uploaded_file, features=features)
     

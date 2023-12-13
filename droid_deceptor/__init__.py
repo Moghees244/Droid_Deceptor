@@ -1,5 +1,6 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_jwt_extended import JWTManager
+from werkzeug.exceptions import Unauthorized
 from .config import Config
 from .models import db
 from .routes.auth_routes import auth_routes
