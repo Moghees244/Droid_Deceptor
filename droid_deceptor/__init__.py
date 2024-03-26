@@ -15,7 +15,7 @@ def create_app():
     
     app.config.from_object(Config)
     db.init_app(app)
-
+    
     app.register_blueprint(auth_routes)
     app.register_blueprint(error_routes)
     app.register_blueprint(user_routes)

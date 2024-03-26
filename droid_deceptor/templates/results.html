@@ -66,25 +66,37 @@
                     Toggle search
                 </button>
             </div>
+            {% if classification %}
             <div class="tiles">
                 <article class="tile">
                     <div class="tile-header">
                         <i class="ph-lightning-light"></i>
                         <h3>
                             <span>SVM</span><br>
-                            <span style="color: red;">Malware</span>
-							<span>87.5%</span>
+                            <span style="color: {% if classification['SVM'][0][0] == 'B' %} green {% else %} red {% endif %};">
+                                {% if classification['SVM'][0][0] == 'B' %}
+                                    Benign
+                                {% else %}
+                                    Malware
+                                {% endif %}
+                            </span>
+							<span>{{ '%.2f' | format((classification['SVM'][1][0] | max * 100)) }} %</span>
                         </h3>
                     </div>
                 </article>
-
 				<article class="tile">
                     <div class="tile-header">
                         <i class="ph-lightning-light"></i>
                         <h3>
                             <span>Decision Trees</span><br>
-                            <span style="color: red;">Malware</span>
-							<span>97.5%</span>
+                            <span style="color: {% if classification['Decision Trees'][0][0] == 'B' %} green {% else %} red {% endif %};">
+                                {% if classification['Decision Trees'][0][0] == 'B' %}
+                                    Benign
+                                {% else %}
+                                    Malware
+                                {% endif %}
+                            </span>
+							<span>{{ '%.2f' | format((classification['Decision Trees'][1][0] | max * 100)) }} %</span>
                         </h3>
                     </div>
                 </article>
@@ -94,14 +106,53 @@
                         <i class="ph-lightning-light"></i>
                         <h3>
                             <span>Random Forests</span><br>
-                            <span style="color: blue;">Benign</span>
-							<span>57.5%</span>
+                            <span style="color: {% if classification['Random Forests'][0][0] == 'B' %} green {% else %} red {% endif %};">
+                                {% if classification['Random Forests'][0][0] == 'B' %}
+                                    Benign
+                                {% else %}
+                                    Malware
+                                {% endif %}
+                            </span>
+							<span>{{ '%.2f' | format((classification['Random Forests'][1][0] | max * 100)) }} %</span>
                         </h3>
                     </div>
                 </article> 
-				
-                
+
+                <article class="tile">
+                    <div class="tile-header">
+                        <i class="ph-lightning-light"></i>
+                        <h3>
+                            <span>k Nearest Neighbours</span><br>
+                            <span style="color: {% if classification['kNN'][0][0] == 'B' %} green {% else %} red {% endif %};">
+                                {% if classification['kNN'][0][0] == 'B' %}
+                                    Benign
+                                {% else %}
+                                    Malware
+                                {% endif %}
+                            </span>
+							<span>{{ '%.2f' | format((classification['kNN'][1][0] | max * 100)) }} %</span>
+                        </h3>
+                    </div>
+                </article> 
+
+                <article class="tile">
+                    <div class="tile-header">
+                        <i class="ph-lightning-light"></i>
+                        <h3>
+                            <span>Logistic Regression</span><br>
+                            <span style="color: {% if classification['Logistic Regression'][0][0] == 'B' %} green {% else %} red {% endif %};">
+                                {% if classification['Logistic Regression'][0][0] == 'B' %}
+                                    Benign
+                                {% else %}
+                                    Malware
+                                {% endif %}
+                            </span>
+							<span>{{ '%.2f' | format((classification['Logistic Regression'][1][0] | max * 100)) }} %</span>
+                        </h3>
+                    </div>
+                </article> 
             </div>
+            {% endif %}
             
         </section>
 

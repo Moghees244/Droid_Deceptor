@@ -5,6 +5,7 @@ from androguard.core.bytecodes import apk
 from flask import render_template, request
 from flask_jwt_extended import jwt_required
 from droid_deceptor.config import Paths
+from droid_deceptor.controllers.user_controllers.malware_classification import prepare_input, malware_classifier
 
 # Paths
 manifest_features_file_path = Paths.manifest_features_file_path
@@ -103,8 +104,8 @@ def extract_api_calls(filename):
 
     try:
         # Getting apk source code and saving in a folder
-        command = ["jadx", "-d", os.path.join("/home/blackcat/FYP/FYP_Code/FYP_Droid_Deceptor/droid_deceptor/outputs", filename[:-4])
-                   , os.path.join("/home/blackcat/FYP/FYP_Code/FYP_Droid_Deceptor/droid_deceptor/uploads", filename)]
+        command = ["jadx", "-d", os.path.join(Paths.jadx_output_path, filename[:-4])
+                   , os.path.join(Paths.jadx_apk_path, filename)]
         
         with open(os.devnull, "w") as devnull:
             subprocess.run(command, stdout=devnull, stderr=subprocess.STDOUT)
@@ -131,6 +132,9 @@ def extract_api_calls(filename):
 def display_results():
     uploaded_file = request.args.get('uploaded_file', '')
     features = extract_features(uploaded_file)
+    input_vector = prepare_input(features)
+    classification = malware_classifier(input_vector)
 
-    return render_template('results.html', status_message=request.args.get('status_message', ''), uploaded_file=uploaded_file, features=features)
+    return render_template('results.html', status_message=request.args.get('status_message', ''),
+                            uploaded_file=uploaded_file, features=features, classification=classification)
     
