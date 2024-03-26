@@ -154,6 +154,14 @@
             </div>
             {% endif %}
             
+            {% if features %}
+            <div class="payment-section-footer">
+            <form action="{{ url_for('user.generate_attack') }}" method="post">
+                <input type="hidden" name="features" value="{{ features }}">
+                <button class="save-button" type="submit">Attack</button>
+            </form>
+            </div>
+            {% endif %}
         </section>
 
 

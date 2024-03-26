@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+
+{% block title %}
+    Attack
+{% endblock %}
+
+{% block content %}
+<div class="main"></div>
+
+<div class="app">
+	<header class="app-header">
+		<div class="app-header-logo">
+			<div class="logo">
+					<img src="{{ url_for('static', filename='images/logo.png') }}" />
+				<h1 class="logo-title">
+					<span>Apk</span>
+					<span>Report</span>
+				</h1>
+			</div>
+		</div>
+
+		<div class="app-header-navigation">
+			<div class="tabs">
+				<a href="#"></a><br>
+
+				<a onclick="changeTab('uploads')" class="active">
+					Details
+				</a>
+				<a onclick="changeTab('iocs')">
+					Features
+				</a>
+				<a onclick="changeTab('feedbacks')">
+					Classification
+				</a>
+				<a></a>
+				</div>
+		</div>
+		<div class="payment-section-footer">
+			<form action="{{ url_for('user.upload_apk') }}" method="get">
+			<button class="save-button">
+				Back
+			</button>
+		</form>
+		</div>
+		
+	</header><br>
+
+	<div class="app-body-main-content">
+        <section class="service-section" id="feedbacks">
+            <br><h2>Classification</h2>
+			{% if not features %}
+            <div class="alert alert-danger mt-4" role="alert">
+                <h2>Invalid APK</h2>
+            </div>
+        {% endif %}
+            <div class="mobile-only">
+                <button class="flat-button">
+                    Toggle search
+                </button>
+            </div>
+            {% if classification %}
+            <div class="tiles">
+                <article class="tile">
+                    <div class="tile-header">
+                        <i class="ph-lightning-light"></i>
+                        <h3>
+                            <span>SVM</span><br>
+                            <span style="color: {% if classification['SVM'][0][0] == 'B' %} green {% else %} red {% endif %};">
+                                {% if classification['SVM'][0][0] == 'B' %}
+                                    Benign
+                                {% else %}
+                                    Malware
+                                {% endif %}
+                            </span>
+							<span>{{ '%.2f' | format((classification['SVM'][1][0] | max * 100)) }} %</span>
+                        </h3>
+                    </div>
+                </article>
+				<article class="tile">
+                    <div class="tile-header">
+                        <i class="ph-lightning-light"></i>
+                        <h3>
+                            <span>Decision Trees</span><br>
+                            <span style="color: {% if classification['Decision Trees'][0][0] == 'B' %} green {% else %} red {% endif %};">
+                                {% if classification['Decision Trees'][0][0] == 'B' %}
+                                    Benign
+                                {% else %}
+                                    Malware
+                                {% endif %}
+                            </span>
+							<span>{{ '%.2f' | format((classification['Decision Trees'][1][0] | max * 100)) }} %</span>
+                        </h3>
+                    </div>
+                </article>
+
+				<article class="tile">
+                    <div class="tile-header">
+                        <i class="ph-lightning-light"></i>
+                        <h3>
+                            <span>Random Forests</span><br>
+                            <span style="color: {% if classification['Random Forests'][0][0] == 'B' %} green {% else %} red {% endif %};">
+                                {% if classification['Random Forests'][0][0] == 'B' %}
+                                    Benign
+                                {% else %}
+                                    Malware
+                                {% endif %}
+                            </span>
+							<span>{{ '%.2f' | format((classification['Random Forests'][1][0] | max * 100)) }} %</span>
+                        </h3>
+                    </div>
+                </article> 
+
+                <article class="tile">
+                    <div class="tile-header">
+                        <i class="ph-lightning-light"></i>
+                        <h3>
+                            <span>k Nearest Neighbours</span><br>
+                            <span style="color: {% if classification['kNN'][0][0] == 'B' %} green {% else %} red {% endif %};">
+                                {% if classification['kNN'][0][0] == 'B' %}
+                                    Benign
+                                {% else %}
+                                    Malware
+                                {% endif %}
+                            </span>
+							<span>{{ '%.2f' | format((classification['kNN'][1][0] | max * 100)) }} %</span>
+                        </h3>
+                    </div>
+                </article> 
+
+                <article class="tile">
+                    <div class="tile-header">
+                        <i class="ph-lightning-light"></i>
+                        <h3>
+                            <span>Logistic Regression</span><br>
+                            <span style="color: {% if classification['Logistic Regression'][0][0] == 'B' %} green {% else %} red {% endif %};">
+                                {% if classification['Logistic Regression'][0][0] == 'B' %}
+                                    Benign
+                                {% else %}
+                                    Malware
+                                {% endif %}
+                            </span>
+							<span>{{ '%.2f' | format((classification['Logistic Regression'][1][0] | max * 100)) }} %</span>
+                        </h3>
+                    </div>
+                </article> 
+            </div>
+            {% endif %}
+            
+            {% if features %}
+            <div class="payment-section-footer">
+            <form action="{{ url_for('user.generate_attack') }}" method="post">
+                <input type="hidden" name="features" value="{{ features }}">
+                <button class="save-button" type="submit">Attack</button>
+            </form>
+            </div>
+            {% endif %}
+        </section>
+
+
+        <section class="transfer-section active" id="uploads">
+            <div class="transfer-section-header">
+                <h2>Details</h2>
+            </div>
+			{% if not features %}
+            <div class="alert alert-danger mt-4" role="alert">
+                <h2>Invalid APK</h2>
+            </div>
+        {% endif %}
+            <div class="transfers">
+                <div class="transfer">
+                    
+                    <dl>
+                        <dt>Name</dt>
+                        <dt>{{ uploaded_file }}</dt>
+                    </dl>
+                </div>
+
+				<div class="transfer">
+                    <dl>
+                        <dt>SHA256</dt>
+                        <dt>{{ features['sha256'] }}</dt>
+                    </dl>
+                </div>
+
+				<div class="transfer">
+                    <dl>
+                        <dt>MD5</dt>
+                        <dt>{{ features['md5'] }}</dt>
+                    </dl>
+                </div>
+
+				<div class="transfer">
+                    <dl>
+                        <dt>File Size</dt>
+                        <dt>{{ features['size'] }} MB</dt>
+                    </dl>
+                </div>
+
+			</div>
+        </section>
+
+
+		<section class="transfer-section" id="iocs">
+            <div class="transfer-section-header">
+                <h2>Features</h2>
+            </div>
+
+			{% if not features %}
+            <div class="alert alert-danger mt-4" role="alert">
+                <h2>Invalid APK</h2>
+            </div>
+        {% endif %}
+
+			<div class="transfers">
+				{% if features %}
+				{% for feature in features %}
+					<div class="transfer">
+						<dl>
+							<dt>{{ feature }}</dt>
+						</dl>
+					</div>
+                {% endfor %}
+				{% endif %}
+			</div>
+			
+        </section>
+    </div>
+   
+</div>
+</div>
+
+<script src="{{ url_for('static', filename='js/admin_dashboard.js') }}"></script>
+{% endblock %}
