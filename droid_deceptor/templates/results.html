@@ -158,9 +158,9 @@
             <div class="payment-section-footer">
             <form action="{{ url_for('user.generate_attack') }}" method="post">
                 <input type="hidden" name="features" value="{{ features }}">
+                <input type="hidden" name="name" value="{{ uploaded_file }}">
                 <button class="save-button" type="submit">Attack</button>
             </form>
-            </div>
             {% endif %}
         </section>
 
@@ -210,7 +210,7 @@
 
 		<section class="transfer-section" id="iocs">
             <div class="transfer-section-header">
-                <h2>Features</h2>
+                <h2>Android Manifest</h2>
             </div>
 
 			{% if not features %}
@@ -222,7 +222,25 @@
 			<div class="transfers">
 				{% if features %}
 				{% for feature, value in features.items() %}
-                    {% if value == 1 %}
+                    {% if value == 1 and feature.startswith(('android.permission', 'android.intent', 'android.hardware')) %}
+					<div class="transfer">
+						<dl>
+							<dt>{{ feature }}</dt>
+						</dl>
+					</div>
+                    {% endif %}
+                {% endfor %}
+				{% endif %}
+			</div>
+            <br>
+            <div class="transfer-section-header">
+                <h2>API Calls</h2>
+            </div>
+
+            <div class="transfers">
+				{% if features %}
+				{% for feature, value in features.items() %}
+                    {% if value == 1 and not feature.startswith(('android.permission', 'android.intent', 'android.hardware')) %}
 					<div class="transfer">
 						<dl>
 							<dt>{{ feature }}</dt>

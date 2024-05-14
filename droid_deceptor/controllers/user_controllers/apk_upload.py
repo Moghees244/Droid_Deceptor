@@ -22,6 +22,15 @@ def get_apk(files):
     if not file.filename.endswith('.apk'):
         return render_template('upload.html', message="You Can Only Upload APK Files.")
     
+    # Check file size
+    max_size = 50000000  # 50 MB
+    file.seek(0, 2)  # Move the file pointer to the end of the file
+    file_length = file.tell()  # Get the current position of the file pointer
+    file.seek(0)  # Reset the file pointer to the beginning of the file
+    
+    if file_length > max_size:
+        return render_template('upload.html', message="File size exceeds maximum limit")
+
     if file:
         # Ensure the folder exists
         os.makedirs(UPLOAD_FOLDER, exist_ok=True)

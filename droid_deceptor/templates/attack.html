@@ -27,12 +27,8 @@
 		<div class="app-header-navigation">
 			<div class="tabs">
 				<a href="#"></a><br>
-
-				<a onclick="changeTab('uploads')" class="active">
-					Details
-				</a>
-				<a onclick="changeTab('iocs')">
-					Features
+				<a onclick="changeTab('iocs')" class="active">
+					Perturbations
 				</a>
 				<a onclick="changeTab('feedbacks')">
 					Classification
@@ -150,66 +146,10 @@
                 </article> 
             </div>
             {% endif %}
+        </section>
+
+		<section class="transfer-section active" id="iocs">
             
-            {% if features %}
-            <div class="payment-section-footer">
-            <form action="{{ url_for('user.generate_attack') }}" method="post">
-                <input type="hidden" name="features" value="{{ features }}">
-                <button class="save-button" type="submit">Attack</button>
-            </form>
-            </div>
-            {% endif %}
-        </section>
-
-
-        <section class="transfer-section active" id="uploads">
-            <div class="transfer-section-header">
-                <h2>Details</h2>
-            </div>
-			{% if not features %}
-            <div class="alert alert-danger mt-4" role="alert">
-                <h2>Invalid APK</h2>
-            </div>
-        {% endif %}
-            <div class="transfers">
-                <div class="transfer">
-                    
-                    <dl>
-                        <dt>Name</dt>
-                        <dt>{{ uploaded_file }}</dt>
-                    </dl>
-                </div>
-
-				<div class="transfer">
-                    <dl>
-                        <dt>SHA256</dt>
-                        <dt>{{ features['sha256'] }}</dt>
-                    </dl>
-                </div>
-
-				<div class="transfer">
-                    <dl>
-                        <dt>MD5</dt>
-                        <dt>{{ features['md5'] }}</dt>
-                    </dl>
-                </div>
-
-				<div class="transfer">
-                    <dl>
-                        <dt>File Size</dt>
-                        <dt>{{ features['size'] }} MB</dt>
-                    </dl>
-                </div>
-
-			</div>
-        </section>
-
-
-		<section class="transfer-section" id="iocs">
-            <div class="transfer-section-header">
-                <h2>Features</h2>
-            </div>
-
 			{% if not features %}
             <div class="alert alert-danger mt-4" role="alert">
                 <h2>Invalid APK</h2>
@@ -227,6 +167,11 @@
                 {% endfor %}
 				{% endif %}
 			</div>
+
+            {% if modified_apk_filename %}
+            <a href="{{ url_for('download_file', filename=modified_apk_filename) }}" download>Download Modified APK</a>
+            {% endif %}
+
 			
         </section>
     </div>
