@@ -29,13 +29,15 @@ def generate_attack():
     perturbations = attack.features_names(adversarial_vector)
     classification = malware_classifier(adversarial_vector)
 
-    #new_apk = modify_apk(name, perturbations)
+    new_apk = modify_apk(name, perturbations)
 
-    return render_template('attack.html', features=perturbations, classification=classification)
+    return render_template('attack.html', features=perturbations, classification=classification, modified_apk_filename=new_apk)
 
 
 @jwt_required()
-def download_file(filename):
+def download_file():
+    filename = request.args.get('filename')
+    print("test", filename)
     if os.path.exists(filename):
         return send_file(filename, as_attachment=True)
     else:
@@ -83,5 +85,5 @@ def add_permission_to_manifest(manifest_content, feature):
     return manifest_content
 
 def recompile_apk(decompiled_path, name):
-    command = f"apktool b {decompiled_path} -o {os.path.join(Paths.apks_path, f'modified.apk')}"
+    command = f"apktool b {decompiled_path} -o {os.path.join(Paths.apks_path, f'{name}_modified.apk')}"
     subprocess.run(command, shell=True, check=True)

@@ -169,7 +169,7 @@
 			</div>
 
             {% if modified_apk_filename %}
-            <a href="{{ url_for('download_file', filename=modified_apk_filename) }}" download>Download Modified APK</a>
+            <a href="#" onclick="downloadFile('{{ url_for('user.download_file') }}?filename={{ modified_apk_filename }}')">Download Modified APK</a>
             {% endif %}
 
 			
@@ -180,4 +180,22 @@
 </div>
 
 <script src="{{ url_for('static', filename='js/admin_dashboard.js') }}"></script>
+<script>
+    function downloadFile(url) {
+        // Create a hidden anchor element
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = '{{ modified_apk_filename }}';
+        
+        // Append the anchor element to the body
+        document.body.appendChild(a);
+        
+        // Trigger a click event on the anchor element
+        a.click();
+        
+        // Remove the anchor element from the body
+        document.body.removeChild(a);
+    }
+</script>
+
 {% endblock %}
