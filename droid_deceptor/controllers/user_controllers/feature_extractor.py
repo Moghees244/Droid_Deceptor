@@ -3,8 +3,9 @@ import re
 import subprocess
 from androguard.core.bytecodes import apk
 from flask import render_template, request
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from droid_deceptor.config import Paths
+from droid_deceptor.models.apk import add_apk
 from droid_deceptor.controllers.user_controllers.malware_classification import prepare_input, malware_classifier
 
 # Paths
@@ -134,6 +135,7 @@ def display_results():
     features = extract_features(uploaded_file)
     input_vector = prepare_input(features)
     classification = malware_classifier(input_vector)
+    add_apk(uploaded_file, features['sha256'], get_jwt_identity())
 
     return render_template('results.html', status_message=request.args.get('status_message', ''),
                             uploaded_file=uploaded_file, features=features, classification=classification)

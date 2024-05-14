@@ -85,29 +85,25 @@
             <div class="transfer-section-header">
                 <h2>Uploads</h2>
             </div>
+			{% if apks %}
             <div class="transfers">
+				{% for apk in apks %}
                 <div class="transfer">
                     
                     <dl class="transfer-details">
                         <div>
-                            <dt>malware.apk</dt>
-							<dd>234567897654323456789876544567</dd>
+                            <dt>{{apk.name}}</dt>
+							<dd>{{apk.hash}}</dd>
                         </div>
                         <div>
-                            <dt>Moghees</dt>
-                            <dd>moghees32</dd>
+                            <dt>{{apk.user}}</dt>
                         </div>
-                        <div>
-                            <dt>20 March 24</dt>
-                            <dd>10:23 pm</dd>
-                        </div>
+						
                     </dl>
-                    <div class="transfer-number">
-                        Malware
-                    </div>
                 </div>
+				{% endfor %}
+			{% endif %}
         </section>
-
 
     </div>
 	<br>
