@@ -37,9 +37,10 @@ def generate_attack():
 @jwt_required()
 def download_file():
     filename = request.args.get('filename')
-    print("test", filename)
-    if os.path.exists(filename):
-        return send_file(filename, as_attachment=True)
+    file_path = os.path.join(Paths.jadx_output_path, filename)
+    
+    if os.path.exists(file_path):
+        return send_file(file_path, as_attachment=True)
     else:
         return "File not found", 404
 
@@ -50,7 +51,7 @@ def modify_apk(name, features):
         return f"APK file '{name}' not found."
 
     # Decompiling APK using apktool
-    decompiled_path = os.path.join(Paths.jadx_output_path, 'temp_decompiled_apk')
+    decompiled_path = os.path.join(Paths.jadx_output_path, f'{name}_temp_decompiled_apk')
     if os.path.exists(decompiled_path):
         shutil.rmtree(decompiled_path)
     os.makedirs(decompiled_path)
@@ -59,7 +60,7 @@ def modify_apk(name, features):
         decompile_apk(apk_path, decompiled_path)
         modify_manifest(os.path.join(decompiled_path, "AndroidManifest.xml"), features)
         recompile_apk(decompiled_path, name)
-        return os.path.join(Paths.apks_path, f'{name}_modified.apk')
+        return f'{name}_modified.apk'
     finally:
         # Clean up decompiled files
         shutil.rmtree(decompiled_path)
@@ -85,5 +86,5 @@ def add_permission_to_manifest(manifest_content, feature):
     return manifest_content
 
 def recompile_apk(decompiled_path, name):
-    command = f"apktool b {decompiled_path} -o {os.path.join(Paths.apks_path, f'{name}_modified.apk')}"
+    command = f"apktool b {decompiled_path} -o {os.path.join(Paths.jadx_output_path, f'{name}_modified.apk')}"
     subprocess.run(command, shell=True, check=True)
